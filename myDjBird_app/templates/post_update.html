@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to DjBird - Post Tweet{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>Post Tweet</h1>
+    <section>
+        <form action="" method="post">
+            {% csrf_token %}
+            Content: <input type="text" name="content" required>
+            <br/>
+            <input type="submit" value="Tweet">
+        </form>
+    </section>
+</section>
+
+{% endblock %}

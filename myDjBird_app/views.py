@@ -31,20 +31,24 @@ def register_user(request):
                              profile_picture=request.POST['profile_picture'])
             new_user.save()
             return HttpResponseRedirect(reverse('index.html'))
-
-            # post = form.save(commit=False)
-            # post.author = request.user
-            # post.save()
-            # return redirect('/index.html')
     else:
         form = Users()
     return render(request, 'register.html', {'form': form})
 
-def add_user(request):
-    new_case = Users(username=request.POST['username'],
-                     password=request.POST['password'],
-                     email=request.POST['email'],
-                     profile_picture=request.POST['profile_picture'])
-    new_case.save()
-    return HttpResponseRedirect(reverse('index'))
+# def add_user(request):
+#     new_case = Users(username=request.POST['username'],
+#                      password=request.POST['password'],
+#                      email=request.POST['email'],
+#                      profile_picture=request.POST['profile_picture'])
+#     new_case.save()
+#     return HttpResponseRedirect(reverse('index'))
 
+def post_update(request):
+    form = Timeline(request.POST)
+    if request.method == 'POST' and form.is_valid():
+        new_update = Timeline(user_id = request.POST['user_id'],
+                              content = request.POST['content'])
+        new_update.save()
+        return HttpResponseRedirect(reverse('index.html'))
+
+    return render(request, 'post_update.html', {'form': form})
