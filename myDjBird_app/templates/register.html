@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to DjBird - Register New User{% endblock %}
+
+{% block content %}
+
+<section>
+    <h1>Register new user</h1>
+    <section>
+        <form action="{% url 'register_user' %}" method="post">
+            {% csrf_token %}
+            Username: <input type="text" name="username" required>
+            <br/>
+            Password: <input type="password" name="password">
+            <br/>
+            Email: <input type="text" name="email">
+            <br/>
+            Profile Picture: <input type="file" name="profile_picture">
+            <br/>
+            <input type="submit" value="Register">
+        </form>
+    </section>
+</section>
+
+{% endblock %}
