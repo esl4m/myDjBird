@@ -46,8 +46,8 @@ def register_user(request):
 def post_update(request):
     form = Timeline(request.POST)
     if request.method == 'POST' and form.is_valid():
-        new_update = Timeline(user_id = request.POST['user_id'],
-                              content = request.POST['content'])
+        new_update = Timeline(user_id=request.POST['user_id'],
+                              content=request.POST['content'])
         new_update.save()
         return HttpResponseRedirect(reverse('index.html'))
 
