@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Welcome to DjBird - Index page{% endblock %}
+{% load staticfiles %}
+
+{% block head_title %}DjBird - Index page{% endblock %}
+{% block title %} Hello .. Welcome in DjBird for tweets ..{% endblock%}
 
 {% block content %}
+<img src='{% static "images/flat.jpg" %}' alt="Picture" /> <!-- New line -->
+<a href="/myDjBird/about/">About</a><br />
+
     <!--<h2>Categories</h2>-->
     <!--{% if categories %}-->
         <!--<ul>-->

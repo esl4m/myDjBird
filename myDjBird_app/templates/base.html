@@ -1,6 +1,11 @@
+<!DOCTYPE html>
+
+{% load static %}
 <html>
     <head>
         <title>{% block head_title %}Welcome to DjBird{% endblock %}</title>
+        <link rel="stylesheet" href='{% static "css/base.css" %}' /> <!-- CSS -->
+        <script src='{% static "js/jquery.js" %}'></script> <!-- JavaScript -->
     </head>
     <body>
         <h1>{% block title %}Welcome to my block{% endblock %}</h1>
