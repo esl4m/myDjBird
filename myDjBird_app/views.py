@@ -24,8 +24,8 @@ def view_update(request):
         'update': get_object_or_404(Timeline)
     })
 
-def show_users(request):
-    return render(request, 'show_users.html', {
+def list_users(request):
+    return render(request, 'list_users.html', {
         'users': Users.objects.all(),
     })
 
