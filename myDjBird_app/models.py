@@ -21,7 +21,8 @@ class Users(models.Model):
     #                         )
 
     class Meta:
-        db_table = 'Users'
+        db_table = 'users'
+        verbose_name_plural = "users"
 
 
 class Timeline(models.Model):
@@ -33,7 +34,8 @@ class Timeline(models.Model):
     # dislikes_count = models.IntegerField()
 
     class Meta:
-        db_table = 'Timeline'
+        db_table = 'timeline'
+        verbose_name_plural = "timeline"
 
 
 class Reply(models.Model):
@@ -42,7 +44,8 @@ class Reply(models.Model):
     date = models.DateTimeField(db_index=True, auto_now_add=True)
 
     class Meta:
-        db_table = 'Reply'
+        db_table = 'reply'
+        verbose_name_plural = "replies"
 
 
 class Likes(models.Model):
@@ -50,7 +53,8 @@ class Likes(models.Model):
     likes_count = models.IntegerField()
 
     class Meta:
-        db_table = 'Likes'
+        db_table = 'likes'
+        verbose_name_plural = "likes"
 
 
 class Dislikes(models.Model):
@@ -58,7 +62,8 @@ class Dislikes(models.Model):
     dislikes_count = models.IntegerField()
 
     class Meta:
-        db_table = 'Dislikes'
+        db_table = 'dislikes'
+        verbose_name_plural = "dislikes"
 
 
 class IFollow(models.Model):
@@ -66,7 +71,8 @@ class IFollow(models.Model):
     user_i_follow = models.ForeignKey(Users, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'IFollow'
+        db_table = 'iFollow'
+        verbose_name_plural = "iFollow"
 
 
 class FollowMe(models.Model):
@@ -74,4 +80,5 @@ class FollowMe(models.Model):
     user_me = models.ForeignKey(Users, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'FollowMe'
+        db_table = 'followMe'
+        verbose_name_plural = "followMe"
