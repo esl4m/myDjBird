@@ -16,6 +16,9 @@ def index(request):
         'timeline': Timeline.objects.all()[:5]
     })
 
+def about(request):
+    return render(request, 'about.html')
+
 def view_update(request):
     return render_to_response('view_update.html', {
         'update': get_object_or_404(Timeline)
