@@ -24,6 +24,11 @@ def view_update(request):
         'update': get_object_or_404(Timeline)
     })
 
+def show_users(request):
+    return render(request, 'show_users.html', {
+        'users': Users.objects.all(),
+    })
+
 def register_user(request):
     if request.method == 'POST':
         form = Users(request.POST)

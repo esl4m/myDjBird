@@ -12,6 +12,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^about', views.about, name='about'),
+    url(r'^show_users', views.show_users, name='show_users'),
     url(r'^register_user/$', views.register_user, name='register'),
     url(r'^post_tweet/$', views.post_update, name='post_tweet'),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),

@@ -1,4 +1,5 @@
 *.pyc
-static/profile_pictures/*
+profile_pictures/*
 static/images/*
+static/profile_pictures/*
 myDjBird_app/migrations/*

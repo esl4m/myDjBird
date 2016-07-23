@@ -5,13 +5,17 @@
 #
 
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 
 # Create your models here.
+fs = FileSystemStorage(location='static/profile_pictures/')
+def only_filename(instance, filename):
+    return filename
 class Users(models.Model):
     username = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=50)
     email = models.EmailField()
-    profile_picture = models.ImageField(upload_to='static/profile_pictures/', blank=True)
+    profile_picture = models.ImageField(storage=fs, upload_to=only_filename, blank=True)
     # pic = models.ImageField(upload_to=get_upload_file_name,
     #                         width_field="width_field",
     #                         height_field="height_field",
