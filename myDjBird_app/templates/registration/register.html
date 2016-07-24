@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block head_title %}Welcome to DjBird - Register New User{% endblock %}
+{% block title %} DjBird Register new user ..{% endblock%}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <section>
+            <h1>Register new user</h1>
+            <section>
+                <div class="col-md-12">
+                    <form method="post" action=".">
+                        {% csrf_token %}
+                            <table border="0">
+                                {{ form.as_table }}
+                            </table>
+                        <button type="submit" class="btn btn-default">Register</button>
+                    </form>
+
+
+                    <!--<form action="" method="post">-->
+                        <!--{% csrf_token %}-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="username">Username</label>-->
+                            <!--<input type="text" class="form-control" id="username" placeholder="Email">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="email">Email address</label>-->
+                            <!--<input type="email" class="form-control" id="email" placeholder="Email">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="password">Password</label>-->
+                            <!--<input type="password" class="form-control" id="password" placeholder="Password">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="profile_picture">Profile Picture: </label>-->
+                            <!--<input type="file" id="profile_picture" name="profile_picture">-->
+                            <!--<p class="help-block">Upload your profile picture.</p>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class="checkbox">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<label>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input type="checkbox"> Check me out&ndash;&gt;-->
+                            <!--&lt;!&ndash;</label>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--<button type="submit" class="btn btn-default">Register</button>-->
+                    <!--</form>-->
+                </div>
+
+
+                <!--<form action="" method="post">-->
+                    <!--{% csrf_token %}-->
+                    <!--Username: <input type="text" name="username" required>-->
+                    <!--<br/>-->
+                    <!--Password: <input type="password" name="password">-->
+                    <!--<br/>-->
+                    <!--Email: <input type="text" name="email">-->
+                    <!--<br/>-->
+                    <!--Profile Picture: <input type="file" name="profile_picture">-->
+                    <!--<br/>-->
+                    <!--<input type="submit" value="Register">-->
+                <!--</form>-->
+            </section>
+        </section>
+    </div>
+</div>
+{% endblock %}

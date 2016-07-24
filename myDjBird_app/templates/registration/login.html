@@ -2,26 +2,26 @@
 {% block title %}Welcome to DjBird - Login{% endblock %}
 
 {% block content %}
+<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+{% csrf_token %}
+    {% if form.errors %}
+        <p>Your Username or Password were not entered correctly. Please try again.</p>
+    {% endif %}
 
-{% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-<form method="post" action="">
-  {% csrf_token %}
-  <table>
+    <table>
     <tr>
-      <td>{{ form.username.label_tag }}</td>
-      <td>{{ form.username }}</td>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
     </tr>
     <tr>
-      <td>{{ form.password.label_tag }}</td>
-      <td>{{ form.password }}</td>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
     </tr>
-  </table>
+    </table>
 
-  <input type="submit" value="Login" class="btn btn-default" />
-  <input type="hidden" name="next" value="{{ next }}" />
+    <input type="submit" value="Login" class="btn btn-default" />
+     <input type="hidden" name="next" value="/myDjBird_app/home" />
 </form>
 
+<a href="../register">Register</a>
 {% endblock %}

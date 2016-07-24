@@ -5,29 +5,56 @@
 {% block title %} Hello .. Welcome in DjBird for tweets ..{% endblock%}
 
 {% block content %}
-<img src='{% static "images/flat.jpg" %}' alt="Picture" /> <!-- New line -->
-<a href="/myDjBird_app/about/">About</a><br />
 
-    <!--<h2>Categories</h2>-->
-    <!--{% if categories %}-->
+
+{% if user.username %}
+<p>Welcome {{ user.username }}, </p>
+<a href="../accounts/logout/">Logout</a>
+{% else %}
+<a href="accounts/login/">Login</a>
+{% endif %}
+    <div class="container">
+        <div class="media">
+            {% if timeline %}
+            {% for post in timeline %}
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="..." alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Media heading</h4>
+                    ...
+                </div>
+            {% endfor %}
+            {% else %}
+                <p>There are nothing in timeline .. start following some users</p>
+            {% endif %}
+        </div>
+    </div>
+<!--<img src='{% static "images/flat.jpg" %}' alt="Picture" /> &lt;!&ndash; New line &ndash;&gt;-->
+<!--<a href="/myDjBird_app/about/">About</a><br />-->
+
+    <!--&lt;!&ndash;<h2>Categories</h2>&ndash;&gt;-->
+    <!--&lt;!&ndash;{% if categories %}&ndash;&gt;-->
+        <!--&lt;!&ndash;<ul>&ndash;&gt;-->
+        <!--&lt;!&ndash;{% for category in categories %}&ndash;&gt;-->
+            <!--&lt;!&ndash;<li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;{% endfor %}&ndash;&gt;-->
+        <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+    <!--&lt;!&ndash;{% else %}&ndash;&gt;-->
+        <!--&lt;!&ndash;<p>There are no posts.</p>&ndash;&gt;-->
+    <!--&lt;!&ndash;{% endif %}&ndash;&gt;-->
+
+    <!--<h2>Updates</h2>-->
+    <!--{% if posts %}-->
         <!--<ul>-->
-        <!--{% for category in categories %}-->
-            <!--<li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>-->
+        <!--{% for post in posts %}-->
+            <!--<li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>-->
         <!--{% endfor %}-->
         <!--</ul>-->
     <!--{% else %}-->
         <!--<p>There are no posts.</p>-->
     <!--{% endif %}-->
-
-    <h2>Updates</h2>
-    {% if posts %}
-        <ul>
-        {% for post in posts %}
-            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no posts.</p>
-    {% endif %}
 
 {% endblock %}
