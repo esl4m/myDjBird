@@ -9,7 +9,7 @@
             <h1>Register new user</h1>
             <section>
                 <div class="col-md-12">
-                    <form method="post" action=".">
+                    <form method="post" action="." enctype="multipart/form-data">
                         {% csrf_token %}
                             <table border="0">
                                 {{ form.as_table }}
