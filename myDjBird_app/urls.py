@@ -11,7 +11,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^home/$', views.home, name='home'),
+    # url(r'^home/$', views.home, name='home'),
     url(r'^about', views.about, name='about'),
     url(r'^list_users', views.list_users, name='list_users'),
     url(r'^accounts/register/$', views.register_user, name='register'),
