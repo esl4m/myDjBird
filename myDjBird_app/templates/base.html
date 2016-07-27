@@ -12,9 +12,28 @@
         <script src='{% static "js/bootstrap.min.js" %}'></script>
     </head>
     <body>
-        <h1>{% block title %}Welcome to my block{% endblock %}</h1>
-        {% block content %}
-
-        {% endblock %}
+        <ul class="nav nav-pills">
+            <li role="presentation" id="home">
+                <a href="/myDjBird_app/">Home</a>
+            </li>
+            <li role="presentation" id="profile">
+                <a href="show_profile.html">Profile</a>
+            </li>
+            <li role="presentation" id="about">
+                <a href="#">About</a>
+            </li>
+        </ul>
+        <h1>
+            <!--{% block title %}Welcome to my block{% endblock %}-->
+        </h1>
+            {% block content %}
+            {% endblock %}
+        <script>
+            $(document).ready(function(){
+                $(".nav-pills a").click(function(){
+                    $(this).tab('show');
+                });
+            });
+        </script>
     </body>
 </html>

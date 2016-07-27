@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block head_title %}DjBird - Show Profile{% endblock %}
-{% block title %} DjBird User Profile ..{% endblock%}
+$('#home').attr('class','active')
 
 {% block content %}
 <div class="container">
@@ -14,24 +14,24 @@
                 <div class="twPc-button">
                     <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
                     <a href="https://twitter.com/mertskaplan" class="twitter-follow-button" data-show-count="false"
-                       data-size="large" data-show-screen-name="false" data-dnt="true">
+                    data-size="large" data-show-screen-name="false" data-dnt="true">
                         Follow @{{user.username}}
                     </a>
                     <script>!function(d,s,id){
-                        var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-                        if(!d.getElementById(id)){
-                            js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-                            fjs.parentNode.insertBefore(js,fjs);}
+                    var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                    if(!d.getElementById(id)){
+                    js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+                    fjs.parentNode.insertBefore(js,fjs);}
                     }(document, 'script', 'twitter-wjs');
                     </script>
                     <!-- Twitter Button -->
                 </div>
                 <a title="{{user.username}}" href="https://twitter.com/mertskaplan" class="twPc-avatarLink">
                     {% if user_details.profile_picture %}
-                        {% static "" as baseUrl %}
-                        <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
+                    {% static "" as baseUrl %}
+                    <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
                     {% else %}
-                        <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/default-pic.jpg" class="twPc-avatarImg">
+                    <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/default-pic.jpg" class="twPc-avatarImg">
                     {% endif %}
                 </a>
 
@@ -77,4 +77,9 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    window.onload=function () {
+        $('#profile').addClass('active');
+    };
+</script>
 {% endblock %}
