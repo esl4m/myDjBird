@@ -79,10 +79,12 @@ def show_profile(request):
 
     user_details = Users.objects.get(user=request.user)
     user_timeline = Timeline.objects.filter(user=request.user).order_by('-date')
+    timeline_counts = Timeline.objects.filter(user=request.user).count()
     return render(request, 'show_profile.html', {
         'user': request.user,
         'user_details': user_details,
         'user_timeline': user_timeline,
+        'timeline_counts': timeline_counts,
     })
 
 
