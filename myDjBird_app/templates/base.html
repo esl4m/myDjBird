@@ -5,7 +5,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block head_title %}Welcome to DjBird{% endblock %}</title>
-        <link rel="stylesheet" href='{% static "css/bootstrap.css" %}' /> <!-- CSS -->
+        <link rel="stylesheet" href='{% static "css/bootstrap.css" %}' />
+        <link rel="stylesheet" href='{% static "css/timeline.css" %}'>
         <link rel="stylesheet" href='{% static "css/base.css" %}' /> <!-- CSS -->
         <!--<script src='{% static "js/jquery-3.1.0.min.js" %}'></script> &lt;!&ndash; JavaScript &ndash;&gt;-->
         <script src='{% static "js/jquery.min-1.10.2.js" %}'></script>
@@ -17,23 +18,25 @@
                 <a href="/myDjBird_app/">Home</a>
             </li>
             <li role="presentation" id="profile">
-                <a href="show_profile.html">Profile</a>
+                <a href="/myDjBird_app/show_profile">Profile</a>
             </li>
             <li role="presentation" id="about">
-                <a href="#">About</a>
+                <a href="/myDjBird_app/about">About</a>
             </li>
+            {% if user.is_authenticated %}
+                <li role="presentation" id="logout">
+                    <a href="/myDjBird_app/accounts/logout">Logout</a>
+                </li>
+            {% else %}
+                <li role="presentation" id="login">
+                    <a href="/myDjBird_app/accounts/login">Login</a>
+                </li>
+            {% endif %}
         </ul>
         <h1>
             <!--{% block title %}Welcome to my block{% endblock %}-->
         </h1>
             {% block content %}
             {% endblock %}
-        <script>
-            $(document).ready(function(){
-                $(".nav-pills a").click(function(){
-                    $(this).tab('show');
-                });
-            });
-        </script>
     </body>
 </html>

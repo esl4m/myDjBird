@@ -68,12 +68,53 @@ $('#home').attr('class','active')
                 </div>
             </div>
         </div>
-
-
-        <p>Welcome {{ user_details.user }}, </p>
+        <p>Welcome {{ user_details.user }}, email: {{user_details.email}} , user: {{user}}</p>
         <!--<p>This is me .. {{user.username}}{{user.id}}{{user.email}}</p>-->
-        email : {{user_details.email}}
-        <br/>
+        <div class="col-md-12">
+            <form action="" method="post">
+                {% csrf_token %}
+                <textarea class="form-control" name="content" rows="2" maxlength="250" placeholder="What's happening?"></textarea>
+                <!--{{ form.as_p }}-->
+                <!--&lt;!&ndash;{{ form.as_ul }}&ndash;&gt;-->
+                <!--&lt;!&ndash;<textarea class="form-control" rows="2" maxlength="25" placeholder="What's happening?"></textarea>&ndash;&gt;-->
+                <input type="submit" value="Tweet" class="btn btn-primary pull-right" />
+            </form>
+        </div>
+        <div class="col-md-12">
+            {% if user_timeline %}
+                <h2>Timeline for {{user.username}}</h2>
+                {% for post in user_timeline %}
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>{{post.user}} says :</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>
+                                        {{post.content}}
+                                    </p>
+                                </div>
+                                <div class="timeline-footer">
+                                    <p class="text-right">{{post.date}}</p>
+                                </div>
+                            </div>
+                        </li>
+                        <!--<li class="clearfix no-float"></li>-->
+                    </ul>
+                    <!--<div class="stream">-->
+                        <!--<ul>-->
+                            <!--<li>-->
+                                <!--<div></div>-->
+                                <!--<div>{{post.date}}</div>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                {% endfor %}
+            {% else %}
+                <p>There are no tweets .. Add yours </p>
+            {% endif %}
+        </div>
 
     </div>
 </div>

@@ -2,26 +2,39 @@
 {% block title %}Welcome to DjBird - Login{% endblock %}
 
 {% block content %}
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-{% csrf_token %}
-    {% if form.errors %}
-        <p>Your Username or Password were not entered correctly. Please try again.</p>
-    {% endif %}
+<div class="container">
+    <div class="row">
+        {% if user.is_authenticated %}
+            Already logged in !
+            <meta http-equiv="refresh" content="0; url=/myDjBird_app/" />
+        {% else %}
+            <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+            {% csrf_token %}
+                {% if form.errors %}
+                    <p>Your Username or Password were not entered correctly. Please try again.</p>
+                {% endif %}
 
-    <table>
-    <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-    </tr>
-    </table>
+                <table>
+                <tr>
+                    <td>{{ form.username.label_tag }}</td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label_tag }}</td>
+                    <td>{{ form.password }}</td>
+                </tr>
+                </table>
 
-    <input type="submit" value="Login" class="btn btn-default" />
-     <input type="hidden" name="next" value="/myDjBird_app" />
-</form>
-
-<a href="../register">Register</a>
+                <input type="submit" value="Login" class="btn btn-default" />
+                <input type="hidden" name="next" value="/myDjBird_app" />
+            </form>
+        {% endif %}
+        <p>New user ? <a href="../register">Create new account</a> </p>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload=function () {
+        $('#login').addClass('active');
+    };
+</script>
 {% endblock %}

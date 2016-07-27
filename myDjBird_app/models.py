@@ -36,7 +36,8 @@ class Users(models.Model):
     #         self.profile_picture="static/profile_pictures/default.png"
 
 class Timeline(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    # user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=250)
     date = models.DateTimeField(db_index=True, auto_now_add=True)
     # content_type = models.CharField(max_length=250, db_index=True) # status_update / reply

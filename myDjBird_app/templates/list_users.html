@@ -8,27 +8,25 @@
 <div class="container">
     <div class="row">
 {% if users %}
-    <!--<ul>-->
-        {% for user in users %}
-                  <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                      {% static "" as baseUrl %}
-
-                        {% if user.profile_picture%}
-                            <img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/{{user.profile_picture}}" alt="{{user.username}}" />
-                        {% else %}
-                            <img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/default.png" alt="Default Image" />
-                        {% endif %}
-                      <div class="caption">
-                        <h3 class="text-center"><a href="{{ user.id}}">{{ user.user }}</a></h3>
-                        <p>{{ user.email }}</p>
-                        <!--<p>
-                            <a href="#" class="btn btn-primary" role="button">Button</a>
-                            <a href="#" class="btn btn-default" role="button">Button</a>
-                            </p>-->
-                      </div>
-                    </div>
-                  </div>
+    {% for user in users %}
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                {% static "" as baseUrl %}
+                {% if user.profile_picture%}
+                <img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/{{user.profile_picture}}" alt="{{user.username}}" />
+                {% else %}
+                <img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/default-pic.jpg" alt="Default Image" />
+                {% endif %}
+                <div class="caption">
+                    <h3 class="text-center"><a href="{{ user.id}}">{{ user.user }}</a></h3>
+                    <p>{{ user.email }}</p>
+                    <!--<p>
+                    <a href="#" class="btn btn-primary" role="button">Button</a>
+                    <a href="#" class="btn btn-default" role="button">Button</a>
+                    </p>-->
+                </div>
+            </div>
+        </div>
 
             <!--User ID : {{ user.id }}-->
             <!--<ul>-->
@@ -42,7 +40,6 @@
                 <!--<li>{{ user.email }}</li>-->
             <!--</ul>-->
         {% endfor %}
-    <!--</ul>-->
 {% else %}
         <p>There are no users.</p>
 {% endif %}

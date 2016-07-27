@@ -1,9 +1,8 @@
-import re
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.core.files.images import get_image_dimensions
-# from .models import UserProfile
+from .models import Timeline
 
 class RegistrationForm(forms.Form):
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(
@@ -41,39 +40,38 @@ class RegistrationForm(forms.Form):
                 raise forms.ValidationError(_("The two password fields did not match."))
         return self.cleaned_data
 
-#
-# class UserProfileForm(forms.Form):
-#     class Meta:
-#         model = UserProfile
-#
-#     def clean_avatar(self):
-#         avatar = self.cleaned_data['avatar']
-#         try:
-#             w, h = get_image_dimensions(avatar)
-#
-#             #validate dimensions
-#             max_width = max_height = 100
-#             if w > max_width or h > max_height:
-#                 raise forms.ValidationError(
-#                     u'Please use an image that is '
-#                      '%s x %s pixels or smaller.' % (max_width, max_height))
-#
-#             #validate content type
-#             main, sub = avatar.content_type.split('/')
-#             if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
-#                 raise forms.ValidationError(u'Please use a JPEG, '
-#                     'GIF or PNG image.')
-#
-#             #validate file size
-#             if len(avatar) > (20 * 1024):
-#                 raise forms.ValidationError(
-#                     u'Avatar file size may not exceed 20k.')
-#
-#         except AttributeError:
-#             """
-#             Handles case when we are updating the user profile
-#             and do not supply a new avatar
-#             """
-#             pass
-#
-#         return avatar
+    def clean_avatar(self):
+        avatar = self.cleaned_data['profile_picture']
+        try:
+            w, h = get_image_dimensions(avatar)
+
+            # validate dimensions
+            max_width = max_height = 100
+            if w > max_width or h > max_height:
+                raise forms.ValidationError(
+                    u'Please use an image that is %s x %s pixels or smaller.' % (max_width, max_height))
+
+            # validate content type
+            main, sub = avatar.content_type.split('/')
+            if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
+                raise forms.ValidationError(u'Please use a JPEG, ''GIF or PNG image.')
+
+            # validate file size
+            if len(avatar) > (20 * 1024):
+                raise forms.ValidationError( u'Avatar file size may not exceed 20k.')
+
+        except AttributeError:
+            """
+            Handles case when we are updating the user profile
+            and do not supply a new avatar
+            """
+            pass
+
+        return avatar
+
+class PostUpdateForm(forms.Form):
+    # content = forms.Textarea()
+    content = forms.CharField(required=True, max_length=250, widget=forms.Textarea)
+    # class Meta:
+    #     model = Timeline
+    #     fields = ('content',)

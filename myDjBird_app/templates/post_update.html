@@ -8,9 +8,10 @@
     <section>
         <form action="" method="post">
             {% csrf_token %}
-            Content: <input type="text" name="content" required>
-            <br/>
-            <input type="submit" value="Tweet">
+            <!--{{ form.as_p }}-->
+            <textarea class="form-control" name="content" rows="2" maxlength="250" placeholder="What's happening?"></textarea>
+            <!--Content: <input type="text"  required>-->
+            <input type="submit" value="Tweet" class="btn btn-primary pull-right" />
         </form>
     </section>
 </section>
