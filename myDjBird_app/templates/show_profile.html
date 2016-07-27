@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}DjBird - Show Profile{% endblock %}
+{% block title %} DjBird User Profile ..{% endblock%}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- code start -->
+        <div class="twPc col-md-12">
+            <a class="twPc-bg twPc-block"></a>
+            <div>
+                <div class="twPc-button">
+                    <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
+                    <a href="https://twitter.com/mertskaplan" class="twitter-follow-button" data-show-count="false"
+                       data-size="large" data-show-screen-name="false" data-dnt="true">
+                        Follow @{{user.username}}
+                    </a>
+                    <script>!function(d,s,id){
+                        var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                        if(!d.getElementById(id)){
+                            js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+                            fjs.parentNode.insertBefore(js,fjs);}
+                    }(document, 'script', 'twitter-wjs');
+                    </script>
+                    <!-- Twitter Button -->
+                </div>
+                <a title="{{user.username}}" href="https://twitter.com/mertskaplan" class="twPc-avatarLink">
+                    {% if user_details.profile_picture %}
+                        {% static "" as baseUrl %}
+                        <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
+                    {% else %}
+                        <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/default-pic.jpg" class="twPc-avatarImg">
+                    {% endif %}
+                </a>
+
+                <div class="twPc-divUser">
+                    <div class="twPc-divName">
+                        <a href="https://twitter.com/mertskaplan">{{user.username}}</a>
+                    </div>
+                    <span>
+                        <a href="https://twitter.com/mertskaplan">@<span>{{user.username}}</span></a>
+                    </span>
+                </div>
+
+                <div class="twPc-divStats">
+                    <ul class="twPc-Arrange">
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="#" title="9.840 Tweet">
+                                <span class="twPc-StatLabel twPc-block">Tweets</span>
+                                <span class="twPc-StatValue">9.840</span>
+                            </a>
+                        </li>
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="#" title="885 Following">
+                                <span class="twPc-StatLabel twPc-block">Following</span>
+                                <span class="twPc-StatValue">885</span>
+                            </a>
+                        </li>
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="#" title="1.810 Followers">
+                                <span class="twPc-StatLabel twPc-block">Followers</span>
+                                <span class="twPc-StatValue">1.810</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <p>Welcome {{ user_details.user }}, </p>
+        <!--<p>This is me .. {{user.username}}{{user.id}}{{user.email}}</p>-->
+        email : {{user_details.email}}
+        <br/>
+
+    </div>
+</div>
+{% endblock %}

@@ -14,6 +14,7 @@ urlpatterns = [
     # url(r'^home/$', views.home, name='home'),
     url(r'^about', views.about, name='about'),
     url(r'^list_users', views.list_users, name='list_users'),
+    url(r'^show_profile', views.show_profile, name='show_profile'),
     url(r'^accounts/register/$', views.register_user, name='register'),
     url(r'^accounts/register/complete/$', views.register_success, name='registration_complete'),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
