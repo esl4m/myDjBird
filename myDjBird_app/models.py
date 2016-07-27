@@ -6,16 +6,18 @@
 
 from django.db import models
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.models import User
 
 # Create your models here.
 fs = FileSystemStorage(location='static/profile_pictures/')
 def only_filename(instance, filename):
     return filename
+
 class Users(models.Model):
-    username = models.CharField(max_length=50, unique=True)
+    user = models.OneToOneField(User)
     password = models.CharField(max_length=50)
     email = models.EmailField()
-    profile_picture = models.ImageField(storage=fs, upload_to=only_filename, blank=True)
+    profile_picture = models.ImageField(storage=fs, upload_to=only_filename, blank=True, null=True)
     # pic = models.ImageField(upload_to=get_upload_file_name,
     #                         width_field="width_field",
     #                         height_field="height_field",
@@ -28,6 +30,10 @@ class Users(models.Model):
         db_table = 'users'
         verbose_name_plural = "users"
 
+    # def set_profile_picture(self):
+    #     _profile_picture = self.profile_picture
+    #     if not _profile_picture:
+    #         self.profile_picture="static/profile_pictures/default.png"
 
 class Timeline(models.Model):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE)

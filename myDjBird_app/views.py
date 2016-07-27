@@ -3,7 +3,8 @@
 #  by: Islam Diaa
 #       17 Jul 2016
 #
-from .forms import *
+from .forms import RegistrationForm
+from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import logout
@@ -21,8 +22,10 @@ from django.core.context_processors import csrf
 
 
 # Create your views here.
+# @login_required
 def index(request):
     return render_to_response('index.html', {
+        'user': request.user,
         'timeline': Timeline.objects.all()[:10]
     })
 
@@ -39,21 +42,77 @@ def list_users(request):
         'users': Users.objects.all(),
     })
 
+@login_required(login_url='accounts/login/')
+def show_profile(request):
+    user_details = Users.objects.get(user=request.user.id)
+    return render(request, 'show_profile.html', {
+        'user': request.user,
+        'user_details': user_details,
+    })
+    # return render(request, 'show_profile.html', {
+    #     'user': request.user,
+    # })
+
 @csrf_protect
 def register_user(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            # user = User.objects.create_user(
+            #     username=form.cleaned_data['username'],
+            #     password=form.cleaned_data['password1'],
+            #     profile_picture=form.cleaned_data['profile_picture'],
+            #     email=form.cleaned_data['email']
+            # )
             user = User.objects.create_user(
-            username=form.cleaned_data['username'],
-            password=form.cleaned_data['password1'],
-            email=form.cleaned_data['email']
-            )
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password1'])
+            user.save()
+
+            dj_user = Users(
+                user=user,
+                email=form.cleaned_data['email'],
+                profile_picture=request.FILES['profile_picture'],
+                # profile_picture=form.cleaned_data['profile_picture'],
+                password=form.cleaned_data['password1'])
+            dj_user.save()
             return HttpResponseRedirect('complete')
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
     return render_to_response('registration/register.html', variables,)
+
+# def register_user(request):
+#     if request.user.is_authenticated():
+#         return HttpResponseRedirect('complete')
+#         # return HttpResponseRedirect('/profile/')
+#
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = User.objects.create_user(
+#                 username=form.cleaned_data['username'],
+#                 email=form.cleaned_data['email'],
+#                 password=form.cleaned_data['password'])
+#             user.save()
+#
+#             dj_user = Users(
+#                 user=user,
+#                 email=form.cleaned_data['email'],
+#                 profile_picture=form.cleaned_data['profile_picture'],
+#                 password=form.cleaned_data['password'])
+#             dj_user.save()
+#             return HttpResponseRedirect('complete')
+#
+#         else:
+#             return render_to_response('registration/register.html', {"form": form},
+#                                       context_instance=RequestContext(request))
+#     else:
+#         '''user is not submitting the form show a blank Registration Form'''
+#         form = RegistrationForm()
+#         context = {'form': form}
+#         return render_to_response('registration/register.html', context, context_instance=RequestContext(request))
 
 def register_success(request):
     return render_to_response('registration/success.html',)
@@ -63,9 +122,9 @@ def logout_page(request):
     return render_to_response('registration/loggedout.html',)
     # return HttpResponseRedirect('registration/loggedout.html')
 
-@login_required
-def home(request):
-    return render_to_response('index.html', {'user': request.user})
+# @login_required
+# def home(request):
+#     return render_to_response('index.html', {'user': request.user})
 
 # def register_user(request):
 #     if request.method == 'POST':
