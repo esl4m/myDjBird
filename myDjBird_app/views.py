@@ -21,9 +21,11 @@ from django.core.urlresolvers import reverse
 
 # Create your views here.
 def index(request):
+    timeline = Timeline.objects.all().order_by('-date')[:49]
     return render_to_response('index.html', {
         'user': request.user,
-        'timeline': Timeline.objects.all()[:10]
+        'timeline':timeline,
+        # 'timeline': Timeline.objects.all()[:10]
     })
 
 
@@ -78,7 +80,7 @@ def show_profile(request):
         return HttpResponseRedirect('/myDjBird_app/show_profile')
 
     user_details = Users.objects.get(user=request.user)
-    user_timeline = Timeline.objects.filter(user=request.user).order_by('-date')
+    user_timeline = Timeline.objects.filter(user=request.user).order_by('-date')[:49]
     timeline_counts = Timeline.objects.filter(user=request.user).count()
     return render(request, 'show_profile.html', {
         'user': request.user,

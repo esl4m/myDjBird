@@ -96,7 +96,18 @@ $('#home').attr('class','active')
                                     </p>
                                 </div>
                                 <div class="timeline-footer">
-                                    <p class="text-right">{{post.date}}</p>
+                                    <a href="#" title="reply">
+                                        <i class="fa fa-reply" aria-hidden="true"></i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="#" title="like">
+                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="#" title="dislike">
+                                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                    </a>
+                                    <span style="float: right">{{post.date}}</span>
                                 </div>
                             </div>
                         </li>
