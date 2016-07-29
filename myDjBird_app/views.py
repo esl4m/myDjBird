@@ -162,9 +162,7 @@ def follow(request, user_id):
         # slave follows master. Update followers count
         # and following count once done.
         try:
-            obj, created = Follow.objects.get_or_create(
-                follower=user,
-                following=usr2folw)
+            obj, created = Follow.objects.get_or_create(follower=user, following=usr2folw)
             if created:
                 master = Follow.objects.get(user=usr2folw)
                 slave = Follow.objects.get(user=user)
@@ -194,7 +192,7 @@ def unfollow(request, user_id):
     # Verify ajax request
     if request:
         user = request.user
-        usr_key = int(user_id)
+        usr_key = User.objects.get(id=int(user_id))  # Getting the username #
 
         # Query user to unfollow
         try:
@@ -205,9 +203,7 @@ def unfollow(request, user_id):
 
         # Same logic as above but in reverse manner.
         try:
-            obj = Follow.objects.get(
-                follower=user,
-                following=usr2unfolw).delete()
+            obj = Follow.objects.get(follower=user, following=usr2unfolw).delete()
 
             master = Follow.objects.get(user=usr2unfolw)
             slave = Follow.objects.get(user=user)
@@ -217,7 +213,7 @@ def unfollow(request, user_id):
             slave.save()
 
             response['success'] = True
-            response['message'] = '''Successfuly unsubscribe to %s now.''' % usr2unfolw.username
+            response['message'] = '''Successfully unfollowed to %s now.''' % usr2unfolw.username
 
         except:
             response['success'] = False

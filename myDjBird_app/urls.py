@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^post_dislike/(?P<status_id>\w+)/$', views.post_dislike, name='post_dislike'),
     url(r'^view_post/(?P<status_id>\w+)/$', views.view_post, name='view_post'),
     url(r'^follow/(?P<user_id>\w+)/$', views.follow, name='follow'),
+    url(r'^unfollow/(?P<user_id>\w+)/$', views.unfollow, name='unfollow'),
     url(r'^accounts/logout/$', views.logout_page, name='logout'),
 ]
