@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}DjBird - Show Tweet{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="timeline">
+                <li>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <span style="font-size: large">
+                                <a href="/myDjBird_app/view_user_profile/{{post.user_id}}">{{post.user}}</a> says :
+                            </span>
+                        </div>
+                        <div class="timeline-body">
+                            <p> {{post.content}} </p>
+                        </div>
+                        <div class="timeline-footer">
+                            <a href="/myDjBird_app/post_reply/{{post.id}}" title="reply">
+                                <i class="fa fa-reply" aria-hidden="true"></i>
+                            </a>
+                            &nbsp;&nbsp;
+                            <a href="/myDjBird_app/post_like/{{post.id}}" title="Likes count {{likes_count}}">
+                                <i class="fa fa-thumbs-up" aria-hidden="true">{{likes_count}}</i>
+                            </a>
+                            &nbsp;&nbsp;
+                            <a href="/myDjBird_app/post_dislike/{{post.id}}" title="Dislikes count {{dislikes_count}}">
+                                <i class="fa fa-thumbs-down" aria-hidden="true">{{dislikes_count}}</i>
+                            </a>
+                            <span style="float: right"><a href="view_post/{{post.id}}" >{{post.date}}</a></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <br/>
+        </div>
+    </div>
+</div>
+{% endblock %}
