@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}DjBird - View User Profile{% endblock %}
+{% block content %}
+<!--{{user.username}}-{{user.email}}-->
+<div class="container">
+    <div class="row">
+        <div class="twPc col-md-12">
+            <a class="twPc-bg twPc-block"></a>
+            <div>
+                <div class="twPc-button">
+                    <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
+                    <a href="https://twitter.com/mertskaplan" class="twitter-follow-button" data-show-count="false"
+                    data-size="large" data-show-screen-name="false" data-dnt="true">
+                        Follow @{{users.username}}
+                    </a>
+                    <script>!function(d,s,id){
+                    var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                    if(!d.getElementById(id)){
+                    js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+                    fjs.parentNode.insertBefore(js,fjs);}
+                    }(document, 'script', 'twitter-wjs');
+                    </script>
+                    <!-- Twitter Button -->
+                </div>
+                <a title="{{users.username}}" href="https://twitter.com/mertskaplan" class="twPc-avatarLink">
+                    {% if user_details.profile_picture %}
+                    {% static "" as baseUrl %}
+                    <img alt="{{users.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
+                    {% else %}
+                    <img alt="{{users.username}}" src="{{ baseUrl }}profile_pictures/default-pic.jpg" class="twPc-avatarImg">
+                    {% endif %}
+                </a>
+
+                <div class="twPc-divUser">
+                    <div class="twPc-divName">
+                        <a href="https://twitter.com/mertskaplan">{{users.username}}</a>
+                    </div>
+                    <span>
+                        <a href="https://twitter.com/mertskaplan">@<span>{{users.username}}</span></a>
+                    </span>
+                </div>
+
+                <div class="twPc-divStats">
+                    <ul class="twPc-Arrange">
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="#" title="{{timeline_counts}} Tweet">
+                                <span class="twPc-StatLabel twPc-block">Tweets</span>
+                                <span class="twPc-StatValue">{{timeline_counts}}</span>
+                            </a>
+                        </li>
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="#" title="885 Following">
+                                <span class="twPc-StatLabel twPc-block">Following</span>
+                                <span class="twPc-StatValue">885</span>
+                            </a>
+                        </li>
+                        <li class="twPc-ArrangeSizeFit">
+                            <a href="#" title="1.810 Followers">
+                                <span class="twPc-StatLabel twPc-block">Followers</span>
+                                <span class="twPc-StatValue">1.810</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h2>Timeline for: {{users.username}}</h2>
+            {% if user_timeline %}
+                {% for post in user_timeline %}
+                    <ul class="timeline">
+                        <li>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>{{post.user}} says :</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>
+                                        {{post.content}}
+                                    </p>
+                                </div>
+                                <div class="timeline-footer">
+                                    <a href="#" title="reply">
+                                        <i class="fa fa-reply" aria-hidden="true"></i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="#" title="like">
+                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="#" title="dislike">
+                                        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                    </a>
+                                    <span style="float: right">{{post.date}}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <p>This user did not post any tweets yet !</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload=function () {
+        $('#profile').addClass('active');
+        $('#login').addClass('hide');
+//        var username = "{{users.username}}";
+//        if (!username){
+////            $('#login').addClass('hide');
+//            var html = document.getElementById('login').innerHTML;
+//            document.getElementById('login').innerHTML = html.replace(
+//                    '<a href="/myDjBird_app/accounts/login">Login</a>',
+//                    '<a href="/myDjBird_app/accounts/logout">Logout</a>');
+//        }
+    };
+</script>
+{% endblock %}
