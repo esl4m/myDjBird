@@ -3,7 +3,7 @@
 #  by: Islam Diaa
 #       17 Jul 2016
 #
-from .forms import RegistrationForm, PostUpdateForm
+from .forms import RegistrationForm, PostUpdateForm, PostReplyForm
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
@@ -15,16 +15,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 def index(request):
-    print(request.GET.getlist('myvar'))
     timeline = Timeline.objects.all().order_by('-date')[:49]
-    likes_count = Likes.objects.filter(status_id=1).count()
-    dislikes_count = Dislikes.objects.filter(status_id=1).count()
     return render_to_response('index.html', {
         'user': request.user,
         'timeline': timeline,
-        'likes_count': likes_count,
-        'dislikes_count': dislikes_count,
-        # 'timeline': Timeline.objects.all()[:10]
     })
 
 
@@ -144,11 +138,32 @@ def view_post(request, status_id):
     status_id = int(status_id)
     likes_count = Likes.objects.filter(status_id=status_id).count()
     dislikes_count = Dislikes.objects.filter(status_id=status_id).count()
+    post = get_object_or_404(Timeline, pk=status_id)
+    user_details = Users.objects.get(user=post.user)
     return render(request, 'view_status.html', {
-        'post': get_object_or_404(Timeline, pk=status_id),
+        'post': post,
         'likes_count': likes_count,
         'dislikes_count': dislikes_count,
+        'user_details': user_details,
     })
+
+
+@login_required(login_url='/myDjBird_app/accounts/login/')
+def post_reply(request):
+    # status_id = int(status_id)
+    # timeline_id = Timeline.objects.get(id=status_id)
+
+    form = PostReplyForm(request.POST)
+    if request.method == 'POST' and form.is_valid():
+        new_reply = Reply(
+            # status_id=timeline_id,
+            content=form.cleaned_data['content_reply'])
+        new_reply.save()
+        return HttpResponseRedirect('/myDjBird_app/view_post/')
+
+    # replies_count = Reply.objects.filter(status_id=status_id).count()
+    return render(request, 'post_reply.html')
+    # return render(request, 'post_update.html', {'form': form})
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')

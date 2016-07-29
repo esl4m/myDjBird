@@ -78,3 +78,6 @@ class PostUpdateForm(forms.Form):
     # class Meta:
     #     model = Timeline
     #     fields = ('content',)
+
+class PostReplyForm(forms.Form):
+    content_reply = forms.CharField(required=True, max_length=250, widget=forms.Textarea)

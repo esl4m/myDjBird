@@ -1,0 +1,27 @@
+<section>
+    <h1>Add Reply</h1>
+    <section>
+        <form action="" method="post">
+            {% csrf_token %}
+            <!--{{ form.as_p }}-->
+            <textarea class="form-control" name="content-reply" rows="2" maxlength="250" placeholder="What's happening?"></textarea>
+            <!--Content: <input type="text"  required>-->
+            <input type="submit" value="Add Reply" class="btn btn-primary pull-right" />
+        </form>
+    </section>
+</section>
+
+<!--<form class="well contact-form" method="post" action="">-->
+  <!--<div class="modal-header">-->
+    <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+    <!--<h3>Editing Contact</h3>-->
+  <!--</div>-->
+  <!--<div class="modal-body">-->
+    <!--{% csrf_token %}-->
+    <!--<textarea class="form-control" name="content_reply" rows="2" maxlength="250" placeholder="What's happening?"></textarea>-->
+  <!--</div>-->
+  <!--<div class="modal-footer">-->
+       <!--<input class="btn btn-primary  pull-right" type="submit" value="Reply" />-->
+       <!--<input name="cancel" class="btn" type="submit" value="Cancel"/>-->
+  <!--</div>-->
+<!--</form>-->
