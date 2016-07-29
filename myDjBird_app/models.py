@@ -18,31 +18,16 @@ class Users(models.Model):
     password = models.CharField(max_length=50)
     email = models.EmailField()
     profile_picture = models.ImageField(storage=fs, upload_to=only_filename, blank=True, null=True)
-    # pic = models.ImageField(upload_to=get_upload_file_name,
-    #                         width_field="width_field",
-    #                         height_field="height_field",
-    #                         null=True,
-    #                         blank=True,
-    #                         verbose_name=("Profile Picture")
-    #                         )
 
     class Meta:
         db_table = 'users'
         verbose_name_plural = "users"
 
-    # def set_profile_picture(self):
-    #     _profile_picture = self.profile_picture
-    #     if not _profile_picture:
-    #         self.profile_picture="static/profile_pictures/default.png"
 
 class Timeline(models.Model):
-    # user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.CharField(max_length=250)
     date = models.DateTimeField(db_index=True, auto_now_add=True)
-    # content_type = models.CharField(max_length=250, db_index=True) # status_update / reply
-    # likes_count = models.IntegerField()
-    # dislikes_count = models.IntegerField()
 
     class Meta:
         db_table = 'timeline'
@@ -77,19 +62,14 @@ class Dislikes(models.Model):
         verbose_name_plural = "dislikes"
 
 
-class IFollow(models.Model):
-    user_me = models.ForeignKey(Users, related_name='+', on_delete=models.CASCADE)
-    user_i_follow = models.ForeignKey(Users, on_delete=models.CASCADE)
+class Follow(models.Model):
+    # user = models.ForeignKey(User, unique=True, on_delete=models.CASCADE)
+    # follows = models.ManyToManyField('self', related_name='follows', symmetrical=False)
+    following = models.ForeignKey(User, related_name="who_follows")
+    follower = models.ForeignKey(User, related_name="who_is_followed")
+    follow_time = models.DateTimeField(db_index=True, auto_now_add=True)
 
     class Meta:
-        db_table = 'iFollow'
-        verbose_name_plural = "iFollow"
+        db_table = 'Follow'
+        verbose_name_plural = "Follow"
 
-
-class FollowMe(models.Model):
-    user_followed_me = models.ForeignKey(Users, related_name='+', on_delete=models.CASCADE)
-    user_me = models.ForeignKey(Users, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'followMe'
-        verbose_name_plural = "followMe"

@@ -5,7 +5,7 @@
 #
 
 from django.contrib import admin
-from .models import Users, Timeline, Reply, Likes, Dislikes, IFollow, FollowMe
+from .models import Users, Timeline, Reply, Likes, Dislikes, Follow
 
 # Register your models here.
 class UsersAdmin(admin.ModelAdmin):
@@ -23,10 +23,7 @@ class LikesAdmin(admin.ModelAdmin):
 class DislikesAdmin(admin.ModelAdmin):
     pass
 
-class IFollowAdmin(admin.ModelAdmin):
-    pass
-
-class FollowMeAdmin(admin.ModelAdmin):
+class FollowAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Users, UsersAdmin)
@@ -34,5 +31,4 @@ admin.site.register(Timeline, TimelineAdmin)
 admin.site.register(Reply, ReplyAdmin)
 admin.site.register(Likes, LikesAdmin)
 admin.site.register(Dislikes, DislikesAdmin)
-admin.site.register(IFollow, IFollowAdmin)
-admin.site.register(FollowMe, FollowMeAdmin)
+admin.site.register(Follow, FollowAdmin)

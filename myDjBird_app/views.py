@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import Users, Timeline, Reply, Likes, Dislikes, FollowMe, IFollow
+from .models import Users, Timeline, Reply, Likes, Dislikes, Follow
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -75,11 +75,15 @@ def show_my_profile(request):
     user_details = Users.objects.get(user=request.user)
     user_timeline = Timeline.objects.filter(user=request.user).order_by('-date')[:49]
     timeline_counts = Timeline.objects.filter(user=request.user).count()
+    i_follow = Follow.objects.filter(follower=request.user).count()  # (I follow means : follower == me !)
+    follow_me = Follow.objects.filter(following=request.user).count()  # follow me means : following == me!)
     return render(request, 'show_my_profile.html', {
         'user': request.user,
         'user_details': user_details,
         'user_timeline': user_timeline,
         'timeline_counts': timeline_counts,
+        'i_follow': i_follow,
+        'follow_me': follow_me,
     })
 
 
@@ -146,7 +150,110 @@ def view_post(request, status_id):
     })
 
 
-@login_required
+@login_required(login_url='/myDjBird_app/accounts/login/')
+def follow(request, user_id):
+    """
+    Method is used to follow an user.
+    """
+    response = {}
+    # Verify ajax request
+    if request:
+        user = request.user
+        usr_key = User.objects.get(id=int(user_id))  # Getting the username #
+        # Query user to follow
+        try:
+            usr2folw = User.objects.get(username=usr_key)
+        except:
+            response['success'] = False
+            response['message'] = 'Unable to Follow now.'
+        # Follow process. create master and slave.
+        # slave follows master. Update followers count
+        # and following count once done.
+        try:
+            obj, created = Follow.objects.get_or_create(
+                follower=user,
+                following=usr2folw)
+            if created:
+                master = Follow.objects.get(user=usr2folw)
+                slave = Follow.objects.get(user=user)
+                master.follower_count = master.follower_count+1
+                slave.following_count = slave.following_count+1
+                master.save()
+                slave.save()
+
+                response['success'] = True
+                response['message'] = 'Following %s now.' % (usr2folw.username)
+        except:
+            response['success'] = False
+            response['message'] = 'Unable to Follow %s now.' % (usr2folw.username)
+    else:
+        response['success'] = False
+        response['message'] = 'Your request can not be served now.'
+
+    return HttpResponseRedirect('/myDjBird_app/', response)
+
+
+@login_required(login_url='/myDjBird_app/accounts/login/')
+def unfollow(request, user_id):
+    """
+    Method is used to unfollow an user.
+    """
+    response = {}
+    # Verify ajax request
+    if request:
+        user = request.user
+        usr_key = int(user_id)
+
+        # Query user to unfollow
+        try:
+            usr2unfolw = User.objects.get(username=usr_key)
+        except:
+            response['success'] = False
+            response['message'] = 'Unable to UnFollow now.'
+
+        # Same logic as above but in reverse manner.
+        try:
+            obj = Follow.objects.get(
+                follower=user,
+                following=usr2unfolw).delete()
+
+            master = Follow.objects.get(user=usr2unfolw)
+            slave = Follow.objects.get(user=user)
+            master.follower_count = master.follower_count-1
+            slave.following_count = slave.following_count-1
+            master.save()
+            slave.save()
+
+            response['success'] = True
+            response['message'] = '''Successfuly unsubscribe to %s now.''' % usr2unfolw.username
+
+        except:
+            response['success'] = False
+            response['message'] = 'Unable to unfollow %s now.' %(usr2unfolw.username)
+
+    else:
+        response['success'] = False
+        response['message'] = 'Your request can not be served now.'
+
+    return HttpResponseRedirect('/myDjBird_app/', response)
+
+    # user_id = int(user_id)
+    # user = Users.objects.get(pk=user_id)
+    # new_i_follow = IFollow(
+    #     user=request.user,  # current login user
+    #     user_i_follow=user,
+    # )
+    # new_i_follow.save()
+    #
+    # new_follow_me = FollowMe(
+    #     user_followed_me=user,
+    #     user=request.user,  # current login user
+    # )
+    # new_follow_me.save()
+    # return HttpResponseRedirect('/myDjBird_app/')
+
+
+@login_required(login_url='/myDjBird_app/accounts/login/')
 def post_like(request, status_id):
     status_id = int(status_id)
     timeline_id = Timeline.objects.get(id=status_id)

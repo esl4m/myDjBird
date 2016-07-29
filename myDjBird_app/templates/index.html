@@ -25,18 +25,7 @@
                                 <p>{{post.content}}</p>
                             </div>
                             <div class="timeline-footer">
-                                <a href="post_reply/{{post.id}}" title="reply">
-                                    <i class="fa fa-reply" aria-hidden="true"></i>
-                                </a>
-                                &nbsp;&nbsp;
-                                <a href="post_like/{{post.id}}" title="Like">
-                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                </a>
-                                &nbsp;&nbsp;
-                                <a href="post_dislike/{{post.id}}" title="Dislike">
-                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                </a>
-                                <span style="float: right"><a href="view_post/{{post.id}}" >{{post.date}}</a></span>
+                                <p class="text-center"><a href="view_post/{{post.id}}" title="click to show post">{{post.date}}</a></p>
                             </div>
                         </div>
                     </li>
