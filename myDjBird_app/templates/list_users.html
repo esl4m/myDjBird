@@ -7,6 +7,7 @@
 <div class="container">
     <div class="row">
 {% if users %}
+    <!--{{i_follow}}-->
     {% for user in users %}
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
@@ -19,9 +20,17 @@
                 <div class="caption">
                     {% if user.user != request.user %}
                         <span style="float: right">
-                            <a href="follow/{{user.id}}" title="Follow {{user.user}}">
-                                <img src="{{ baseUrl }}images/followbutton.png" width="100" alt="Follow" />
-                            </a>
+                            <!-- check if user already following or not ! -->
+                            {% if user.id in i_follow %}
+                                <a href="unfollow/{{user.id}}" title="UnFollow {{user.user}}">
+                                    <img src="{{ baseUrl }}images/unfollowbutton.png" width="100" alt="Follow" />
+                                </a>
+                            {% else %}
+                                <a href="follow/{{user.id}}" title="Follow {{user.user}}">
+                                    <img src="{{ baseUrl }}images/followbutton.png" width="100" alt="Follow" />
+                                </a>
+                            {% endif %}
+
                         </span>
                     {% endif %}
                     <h3 class="text-left"><a href="view_user_profile/{{ user.id}}">{{ user.user }}</a></h3>

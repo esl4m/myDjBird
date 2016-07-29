@@ -34,18 +34,6 @@ def about(request):
 
 @login_required(login_url='accounts/login/')
 def post_update(request):
-    # if request.method == 'POST':
-    #     form = PostUpdateForm(request.POST)
-    #     if form.is_valid():
-    #         post = form.save(commit=False)
-    #         post.user = request.user
-    #         post.save()
-    #         return redirect('index.html')
-    # else:
-    #     form = PostUpdateForm()
-    # return render(request, 'post_update.html', {'form': form})
-
-    # # form = Timeline(request.POST)
     form = PostUpdateForm(request.POST)
     if request.method == 'POST' and form.is_valid():
         new_update = Timeline(
@@ -57,8 +45,12 @@ def post_update(request):
 
 
 def list_users(request):
+    i_follow = Follow.objects.filter(follower=request.user)  # get all users I follow !
+    i_follow = i_follow.values_list('following')
+    i_follow = [int(e[0]) for e in i_follow]
     return render(request, 'list_users.html', {
         'users': Users.objects.all(),
+        'i_follow': i_follow,
     })
 
 
@@ -153,7 +145,7 @@ def view_post(request, status_id):
 @login_required(login_url='/myDjBird_app/accounts/login/')
 def follow(request, user_id):
     """
-    Method is used to follow an user.
+    Method is used to follow user.
     """
     response = {}
     # Verify ajax request
