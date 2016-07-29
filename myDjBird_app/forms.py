@@ -12,7 +12,10 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(
         attrs=dict(required=True, max_length=30)),
         label=_("Email address"))
-    profile_picture = forms.FileField(required=False)
+    if forms.FileField(required=False):
+        profile_picture = forms.FileField(required=False)
+    else:
+        profile_picture = None
     password1 = forms.CharField(widget=forms.PasswordInput(
         attrs=dict(required=True, max_length=30, render_value=False)),
         label=_("Password"))

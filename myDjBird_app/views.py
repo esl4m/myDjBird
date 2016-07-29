@@ -9,22 +9,21 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import Users, Timeline  # , Reply, Likes, Dislikes, FollowMe, IFollow
+from .models import Users, Timeline, Reply, Likes, Dislikes, FollowMe, IFollow
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
-
-# from django.contrib.auth import authenticate, login
-# from django.contrib.auth.forms import UserCreationForm
-# from django.core.context_processors import csrf
-
 
 # Create your views here.
 def index(request):
+    print(request.GET.getlist('myvar'))
     timeline = Timeline.objects.all().order_by('-date')[:49]
+    likes_count = Likes.objects.filter(status_id=1).count()
+    dislikes_count = Dislikes.objects.filter(status_id=1).count()
     return render_to_response('index.html', {
         'user': request.user,
-        'timeline':timeline,
+        'timeline': timeline,
+        'likes_count': likes_count,
+        'dislikes_count': dislikes_count,
         # 'timeline': Timeline.objects.all()[:10]
     })
 
@@ -57,12 +56,6 @@ def post_update(request):
     return render(request, 'post_update.html', {'form': form})
 
 
-def view_update(request):
-    return render_to_response('view_update.html', {
-        'update': get_object_or_404(Timeline)
-    })
-
-
 def list_users(request):
     return render(request, 'list_users.html', {
         'users': Users.objects.all(),
@@ -70,7 +63,7 @@ def list_users(request):
 
 
 @login_required(login_url='accounts/login/')
-def show_profile(request):
+def show_my_profile(request):
     form = PostUpdateForm(request.POST)
     if request.method == 'POST' and form.is_valid():
         new_update = Timeline(
@@ -82,7 +75,7 @@ def show_profile(request):
     user_details = Users.objects.get(user=request.user)
     user_timeline = Timeline.objects.filter(user=request.user).order_by('-date')[:49]
     timeline_counts = Timeline.objects.filter(user=request.user).count()
-    return render(request, 'show_profile.html', {
+    return render(request, 'show_my_profile.html', {
         'user': request.user,
         'user_details': user_details,
         'user_timeline': user_timeline,
@@ -104,10 +97,14 @@ def register_user(request):
                 password=form.cleaned_data['password1'])
             user.save()
 
+            if not request.FILES:
+                profile_pic = "default-pic.jpg"
+            else:
+                profile_pic = request.FILES['profile_picture']
             dj_user = Users(
                 user=user,
                 email=form.cleaned_data['email'],
-                profile_picture=request.FILES['profile_picture'],
+                profile_picture=profile_pic,
                 # profile_picture=form.cleaned_data['profile_picture'],
                 password=form.cleaned_data['password1'])
             dj_user.save()
@@ -122,8 +119,58 @@ def register_success(request):
     return render_to_response('registration/success.html',)
 
 
+def view_user_profile(request, user_id):
+    user_id = int(user_id)
+    user = User.objects.get(id=user_id)  # Getting the username #
+
+    user_details = Users.objects.get(user=user)
+    user_timeline = Timeline.objects.filter(user=user).order_by('-date')[:49]
+    timeline_counts = Timeline.objects.filter(user=user).count()
+
+    return render(request, 'view_profile.html', {
+        'users': get_object_or_404(User, pk=user_id),
+        'user_details': user_details,
+        'user_timeline': user_timeline,
+        'timeline_counts': timeline_counts,
+    })
+
+
+def view_post(request, status_id):
+    status_id = int(status_id)
+    likes_count = Likes.objects.filter(status_id=status_id).count()
+    dislikes_count = Dislikes.objects.filter(status_id=status_id).count()
+    return render(request, 'view_status.html', {
+        'post': get_object_or_404(Timeline, pk=status_id),
+        'likes_count': likes_count,
+        'dislikes_count': dislikes_count,
+    })
+
+
+@login_required
+def post_like(request, status_id):
+    status_id = int(status_id)
+    timeline_id = Timeline.objects.get(id=status_id)
+    new_like = Likes(
+        user=request.user,
+        status_id=timeline_id,
+    )
+    new_like.save()
+    return HttpResponseRedirect('/myDjBird_app/')
+
+
+@login_required
+def post_dislike(request, status_id):
+    status_id = int(status_id)
+    timeline_id = Timeline.objects.get(id=status_id)
+    new_dislike = Dislikes(
+        user=request.user,
+        status_id=timeline_id,
+    )
+    new_dislike.save()
+    return HttpResponseRedirect('/myDjBird_app/')
+
+
 def logout_page(request):
     logout(request)
     return render_to_response('registration/loggedout.html',)
     # return HttpResponseRedirect('registration/loggedout.html')
-

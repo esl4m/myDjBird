@@ -60,8 +60,8 @@ class Reply(models.Model):
 
 
 class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     status_id = models.ForeignKey(Timeline, on_delete=models.CASCADE)
-    likes_count = models.IntegerField()
 
     class Meta:
         db_table = 'likes'
@@ -69,8 +69,8 @@ class Likes(models.Model):
 
 
 class Dislikes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     status_id = models.ForeignKey(Timeline, on_delete=models.CASCADE)
-    dislikes_count = models.IntegerField()
 
     class Meta:
         db_table = 'dislikes'
