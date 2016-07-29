@@ -8,37 +8,23 @@
         <div class="twPc col-md-12">
             <a class="twPc-bg twPc-block"></a>
             <div>
-                <div class="twPc-button">
-                    <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
-                    <a href="https://twitter.com/mertskaplan" class="twitter-follow-button" data-show-count="false"
-                    data-size="large" data-show-screen-name="false" data-dnt="true">
-                        Follow @{{users.username}}
-                    </a>
-                    <script>!function(d,s,id){
-                    var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-                    if(!d.getElementById(id)){
-                    js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-                    fjs.parentNode.insertBefore(js,fjs);}
-                    }(document, 'script', 'twitter-wjs');
-                    </script>
-                    <!-- Twitter Button -->
-                </div>
-                <a title="{{users.username}}" href="https://twitter.com/mertskaplan" class="twPc-avatarLink">
-                    {% if user_details.profile_picture %}
+                <a title="{{users.username}}" href="#" class="twPc-avatarLink">
                     {% static "" as baseUrl %}
-                    <img alt="{{users.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
+                    {% if user_details.profile_picture %}
+                        <img alt="{{users.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
                     {% else %}
-                    <img alt="{{users.username}}" src="{{ baseUrl }}profile_pictures/default-pic.jpg" class="twPc-avatarImg">
+                        <img alt="{{users.username}}" src="{{ baseUrl }}profile_pictures/default-pic.jpg" class="twPc-avatarImg">
                     {% endif %}
                 </a>
 
                 <div class="twPc-divUser">
                     <div class="twPc-divName">
-                        <a href="https://twitter.com/mertskaplan">{{users.username}}</a>
+                        <a href="#">{{users.username}}</a>
                     </div>
                     <span>
-                        <a href="https://twitter.com/mertskaplan">@<span>{{users.username}}</span></a>
+                        <a href="#">@<span>{{users.username}}</span></a>
                     </span>
+
                 </div>
 
                 <div class="twPc-divStats">
@@ -50,15 +36,15 @@
                             </a>
                         </li>
                         <li class="twPc-ArrangeSizeFit">
-                            <a href="#" title="885 Following">
+                            <a href="#" title="{{i_follow}} Following">
                                 <span class="twPc-StatLabel twPc-block">Following</span>
-                                <span class="twPc-StatValue">885</span>
+                                <span class="twPc-StatValue">{{i_follow}}</span>
                             </a>
                         </li>
                         <li class="twPc-ArrangeSizeFit">
-                            <a href="#" title="1.810 Followers">
+                            <a href="#" title="{{follow_me}} Followers">
                                 <span class="twPc-StatLabel twPc-block">Followers</span>
-                                <span class="twPc-StatValue">1.810</span>
+                                <span class="twPc-StatValue">{{follow_me}}</span>
                             </a>
                         </li>
                     </ul>
@@ -107,15 +93,6 @@
 <script type="text/javascript">
     window.onload=function () {
         $('#profile').addClass('active');
-        $('#login').addClass('hide');
-//        var username = "{{users.username}}";
-//        if (!username){
-////            $('#login').addClass('hide');
-//            var html = document.getElementById('login').innerHTML;
-//            document.getElementById('login').innerHTML = html.replace(
-//                    '<a href="/myDjBird_app/accounts/login">Login</a>',
-//                    '<a href="/myDjBird_app/accounts/logout">Logout</a>');
-//        }
     };
 </script>
 {% endblock %}

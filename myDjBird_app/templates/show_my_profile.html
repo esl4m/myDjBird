@@ -10,9 +10,9 @@
             <a class="twPc-bg twPc-block"></a>
             <div>
                 <a title="{{user.username}}" href="#" class="twPc-avatarLink">
-                    {% if user_details.profile_picture %}
                     {% static "" as baseUrl %}
-                    <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
+                    {% if user_details.profile_picture %}
+                        <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/{{user_details.profile_picture}}" class="twPc-avatarImg">
                     {% else %}
                     <img alt="{{user.username}}" src="{{ baseUrl }}profile_pictures/default-pic.jpg" class="twPc-avatarImg">
                     {% endif %}

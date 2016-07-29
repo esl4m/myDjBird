@@ -45,9 +45,12 @@ def post_update(request):
 
 
 def list_users(request):
-    i_follow = Follow.objects.filter(follower=request.user)  # get all users I follow !
-    i_follow = i_follow.values_list('following')
-    i_follow = [int(e[0]) for e in i_follow]
+    if request.user.is_authenticated():
+        i_follow = Follow.objects.filter(follower=request.user)  # get all users I follow !
+        i_follow = i_follow.values_list('following')
+        i_follow = [int(e[0]) for e in i_follow]
+    else:
+        i_follow = ''
     return render(request, 'list_users.html', {
         'users': Users.objects.all(),
         'i_follow': i_follow,
@@ -67,8 +70,12 @@ def show_my_profile(request):
     user_details = Users.objects.get(user=request.user)
     user_timeline = Timeline.objects.filter(user=request.user).order_by('-date')[:49]
     timeline_counts = Timeline.objects.filter(user=request.user).count()
-    i_follow = Follow.objects.filter(follower=request.user).count()  # (I follow means : follower == me !)
-    follow_me = Follow.objects.filter(following=request.user).count()  # follow me means : following == me!)
+    if request.user.is_authenticated():
+        i_follow = Follow.objects.filter(follower=request.user).count()  # (I follow means : follower == me !)
+        follow_me = Follow.objects.filter(following=request.user).count()  # follow me means : following == me!)
+    else:
+        i_follow = ''
+        follow_me = ''
     return render(request, 'show_my_profile.html', {
         'user': request.user,
         'user_details': user_details,
@@ -118,16 +125,18 @@ def register_success(request):
 def view_user_profile(request, user_id):
     user_id = int(user_id)
     user = User.objects.get(id=user_id)  # Getting the username #
-
     user_details = Users.objects.get(user=user)
     user_timeline = Timeline.objects.filter(user=user).order_by('-date')[:49]
     timeline_counts = Timeline.objects.filter(user=user).count()
-
+    i_follow = Follow.objects.filter(follower=user).count()  # (I follow means : follower == me !)
+    follow_me = Follow.objects.filter(following=user).count()  # follow me means : following == me!)
     return render(request, 'view_profile.html', {
         'users': get_object_or_404(User, pk=user_id),
         'user_details': user_details,
         'user_timeline': user_timeline,
         'timeline_counts': timeline_counts,
+        'i_follow': i_follow,
+        'follow_me': follow_me,
     })
 
 
@@ -224,21 +233,6 @@ def unfollow(request, user_id):
         response['message'] = 'Your request can not be served now.'
 
     return HttpResponseRedirect('/myDjBird_app/', response)
-
-    # user_id = int(user_id)
-    # user = Users.objects.get(pk=user_id)
-    # new_i_follow = IFollow(
-    #     user=request.user,  # current login user
-    #     user_i_follow=user,
-    # )
-    # new_i_follow.save()
-    #
-    # new_follow_me = FollowMe(
-    #     user_followed_me=user,
-    #     user=request.user,  # current login user
-    # )
-    # new_follow_me.save()
-    # return HttpResponseRedirect('/myDjBird_app/')
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')

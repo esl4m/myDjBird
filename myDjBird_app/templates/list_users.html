@@ -23,7 +23,7 @@
                             <!-- check if user already following or not ! -->
                             {% if user.id in i_follow %}
                                 <a href="unfollow/{{user.id}}" title="UnFollow {{user.user}}">
-                                    <img src="{{ baseUrl }}images/unfollowbutton.png" width="100" alt="Follow" />
+                                    <img src="{{ baseUrl }}images/unfollowbutton.png" width="100" alt="UnFollow" />
                                 </a>
                             {% else %}
                                 <a href="follow/{{user.id}}" title="Follow {{user.user}}">
@@ -35,10 +35,6 @@
                     {% endif %}
                     <h3 class="text-left"><a href="view_user_profile/{{ user.id}}">{{ user.user }}</a></h3>
                     <p>{{ user.email }}</p>
-                    <!--<p>
-                    <a href="#" class="btn btn-primary" role="button">Button</a>
-                    <a href="#" class="btn btn-default" role="button">Button</a>
-                    </p>-->
                 </div>
             </div>
         </div>
