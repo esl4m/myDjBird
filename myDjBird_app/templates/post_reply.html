@@ -1,16 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}DjBird - View User Profile{% endblock %}
+{% block content %}
+
 <section>
     <h1>Add Reply</h1>
     <section>
         <form action="" method="post">
             {% csrf_token %}
             <!--{{ form.as_p }}-->
-            <textarea class="form-control" name="content-reply" rows="2" maxlength="250" placeholder="What's happening?"></textarea>
+            <textarea class="form-control" name="content" rows="2" maxlength="250" placeholder="What's happening?"></textarea>
             <!--Content: <input type="text"  required>-->
             <input type="submit" value="Add Reply" class="btn btn-primary pull-right" />
         </form>
     </section>
 </section>
-
+{% endblock %}
 <!--<form class="well contact-form" method="post" action="">-->
   <!--<div class="modal-header">-->
     <!--<button type="button" class="close" data-dismiss="modal">×</button>-->

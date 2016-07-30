@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import Users, Timeline, Reply, Likes, Dislikes, Follow
+from .models import Users, Timeline, Replies, Likes, Dislikes, Follow
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -26,7 +26,7 @@ def about(request):
     return render(request, 'about.html')
 
 
-@login_required(login_url='accounts/login/')
+@login_required(login_url='/myDjBird_app/accounts/login/')
 def post_update(request):
     form = PostUpdateForm(request.POST)
     if request.method == 'POST' and form.is_valid():
@@ -51,7 +51,7 @@ def list_users(request):
     })
 
 
-@login_required(login_url='accounts/login/')
+@login_required(login_url='/myDjBird_app/accounts/login/')
 def show_my_profile(request):
     form = PostUpdateForm(request.POST)
     if request.method == 'POST' and form.is_valid():
@@ -140,30 +140,35 @@ def view_post(request, status_id):
     dislikes_count = Dislikes.objects.filter(status_id=status_id).count()
     post = get_object_or_404(Timeline, pk=status_id)
     user_details = Users.objects.get(user=post.user)
+    replies = Replies.objects.filter(status_id=status_id).order_by('-date')
+    reply_count = replies.count()
+    # user_reply_details = Users.objects.get(user=replies.user)
     return render(request, 'view_status.html', {
         'post': post,
         'likes_count': likes_count,
         'dislikes_count': dislikes_count,
         'user_details': user_details,
+        'replies': replies,
+        'reply_count': reply_count,
+        # 'user_reply_details': user_reply_details,
     })
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')
-def post_reply(request):
-    # status_id = int(status_id)
-    # timeline_id = Timeline.objects.get(id=status_id)
-
-    form = PostReplyForm(request.POST)
-    if request.method == 'POST' and form.is_valid():
-        new_reply = Reply(
-            # status_id=timeline_id,
-            content=form.cleaned_data['content_reply'])
-        new_reply.save()
-        return HttpResponseRedirect('/myDjBird_app/view_post/')
-
-    # replies_count = Reply.objects.filter(status_id=status_id).count()
-    return render(request, 'post_reply.html')
-    # return render(request, 'post_update.html', {'form': form})
+def post_reply(request, status_id):
+    status_id = int(status_id)
+    timeline_id = Timeline.objects.get(id=status_id)
+    reply_form = PostReplyForm(data=request.POST)
+    if request.method == 'POST' and reply_form.is_valid():
+        new_update = Replies(
+            user=request.user,
+            status_id=timeline_id,
+            content=reply_form.cleaned_data['content'])
+        new_update.save()
+        return HttpResponseRedirect('/myDjBird_app/view_post/%s' % status_id)
+    else:
+        reply_form = PostReplyForm()
+    return render(request, 'post_reply.html', {'reply_form': reply_form})
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')
@@ -262,7 +267,7 @@ def post_like(request, status_id):
     return HttpResponseRedirect('/myDjBird_app/')
 
 
-@login_required
+@login_required(login_url='/myDjBird_app/accounts/login/')
 def post_dislike(request, status_id):
     status_id = int(status_id)
     timeline_id = Timeline.objects.get(id=status_id)

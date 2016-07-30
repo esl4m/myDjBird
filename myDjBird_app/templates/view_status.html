@@ -1,14 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block head_title %}DjBird - Show Tweet{% endblock %}
-
 {% block content %}
-
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<!--<a href="/myDjBird_app/post_reply.html" >bring up a popup</a>-->
-<div id="popup"></div>
 
 <div class="container">
     <div class="row">
@@ -33,8 +26,7 @@
                             <p> {{post.content}} </p>
                         </div>
                         <div class="timeline-footer">
-                            <!--<a href="/myDjBird_app/post_reply/{{post.id}}" title="reply">-->
-                            <a href="/myDjBird_app/post_reply" title="Add Reply" class="js-popup-link">
+                            <a href="/myDjBird_app/post_reply/{{post.id}}" title="Add Reply">
                                 <i class="fa fa-reply" aria-hidden="true"></i>
                             </a>
                             &nbsp;&nbsp;
@@ -53,44 +45,40 @@
             <br/>
         </div>
     </div>
+    <!-- Check if tweet have replies -->
+    {% if replies %}
+        <div class="row">
+            <div class="col-md-12">
+                <h2>There are {{reply_count}} replies on status # {{post.id}}</h2>
+                {% for reply in replies %}
+                    <ul class="timeline">
+                        <li><div class="timeline-panel">
+                            <!--<div class="col-md-1">-->
+                                <!--{% static "" as baseUrl %}-->
+                                <!--{% if user_details.profile_picture%}-->
+                                    <!--<img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/{{user_reply_details.profile_picture}}" alt="{{reply.user}}" />-->
+                                <!--{% else %}-->
+                                    <!--<img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/default-pic.jpg" alt="Default Image" />-->
+                                <!--{% endif %}-->
+                            <!--</div>-->
+                            <div class="col-md-12">
+                                <div class="timeline-heading">
+                                    <span style="font-size: large">
+                                        <a href="/myDjBird_app/view_user_profile/{{reply.user_id}}">{{reply.user}}</a> says :
+                                    </span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p> {{reply.content}} </p>
+                                </div>
+                                <div class="timeline-footer">
+                                    <p class="text-center">{{reply.date}}</p>
+                                </div>
+                            </div>
+                        </div></li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 </div>
-
-
-<!--<a class="contact" href="#" data-form="/myDjBird_app/" title="Edit">edit</a>-->
-<!--&lt;!&ndash;<a class="contact" href="#" data-form="/contact/edit/{{ item.id }}" title="Edit">edit</a>&ndash;&gt;-->
-<!--&lt;!&ndash;<a class="contact" href="#" data-form="/contact/edit/{{ item.id }}" title="Edit">edit</a>&ndash;&gt;-->
-
-<!--<div class="modal hide" id="post_reply"></div>-->
-
-<!--<script>-->
-    <!--$(".contact").click(function(ev) { // for each edit contact url-->
-        <!--ev.preventDefault(); // prevent navigation-->
-        <!--var url = $(this).data("form"); // get the contact form url-->
-        <!--$("#post_reply").load(url, function() { // load the url into the modal-->
-            <!--$(this).modal('show'); // display the modal on url load-->
-        <!--});-->
-        <!--return false; // prevent the click propagation-->
-    <!--});-->
-
-    <!--$('.contact-form').live('submit', function() {-->
-        <!--$.ajax({-->
-            <!--type: $(this).attr('method'),-->
-            <!--url: this.action,-->
-            <!--data: $(this).serialize(),-->
-            <!--context: this,-->
-            <!--success: function(data, status) {-->
-                <!--$('#post_reply').html(data);-->
-            <!--}-->
-        <!--});-->
-        <!--return false;-->
-    <!--});-->
-<!--</script>-->
-<script>
-$(function(){
-  $('.js-popup-link').click(function(e){
-    e.preventDefault()
-    $('#popup').dialog({modal: true}).dialog('open').load(this.href)
-  })
-})
-</script>
 {% endblock %}

@@ -34,13 +34,14 @@ class Timeline(models.Model):
         verbose_name_plural = "timeline"
 
 
-class Reply(models.Model):
+class Replies(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     status_id = models.ForeignKey(Timeline, on_delete=models.CASCADE)
     content = models.CharField(max_length=250)
     date = models.DateTimeField(db_index=True, auto_now_add=True)
 
     class Meta:
-        db_table = 'reply'
+        db_table = 'replies'
         verbose_name_plural = "replies"
 
 
