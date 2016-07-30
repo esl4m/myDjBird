@@ -243,7 +243,7 @@ def follow(request, user_id):
         response['success'] = False
         response['message'] = 'Your request can not be served now.'
 
-    return HttpResponseRedirect('/myDjBird_app/', response)
+    return HttpResponseRedirect('/myDjBird_app/list_users/', response)
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')
@@ -286,7 +286,7 @@ def unfollow(request, user_id):
         response['success'] = False
         response['message'] = 'Your request can not be served now.'
 
-    return HttpResponseRedirect('/myDjBird_app/', response)
+    return HttpResponseRedirect('/myDjBird_app/list_users/', response)
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')

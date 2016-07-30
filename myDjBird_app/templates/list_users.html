@@ -31,11 +31,11 @@
                         <span style="float: right">
                             <!-- check if user already following or not ! -->
                             {% if user.id in i_follow %}
-                                <a href="unfollow/{{user.id}}" title="UnFollow {{user.user}}">
+                                <a href="/myDjBird_app/unfollow/{{user.id}}" title="UnFollow {{user.user}}">
                                     <img src="{{ baseUrl }}images/unfollowbutton.png" width="100" alt="UnFollow" />
                                 </a>
                             {% else %}
-                                <a href="follow/{{user.id}}" title="Follow {{user.user}}">
+                                <a href="/myDjBird_app/follow/{{user.id}}" title="Follow {{user.user}}">
                                     <img src="{{ baseUrl }}images/followbutton.png" width="100" alt="Follow" />
                                 </a>
                             {% endif %}
