@@ -6,10 +6,19 @@
 {% block content %}
 <div class="container">
     <div class="row">
-{% if users %}
+    {% if users %}
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Users (by user name)..." onchange="getUserName(this);" id="user_name">
+                <span class="input-group-btn">
+                    <a href="search_users/+ document.getElementById('user_name').value" class="btn btn-default ajax-link">Go!</a>
+                </span>
+            </div><!-- /input-group -->
+        </div>
     <!--{{i_follow}}-->
     {% for user in users %}
         <div class="col-sm-6 col-md-4">
+            <br/>
             <div class="thumbnail">
                 {% static "" as baseUrl %}
                 {% if user.profile_picture%}
@@ -60,5 +69,10 @@
     window.onload=function () {
         $('#users').addClass('active');
     };
+
+    function getUserName(ele){
+        var href="search_users/"+$(ele).val();
+        $(".ajax-link").attr("href",""+href);
+    }
 </script>
 {% endblock %}

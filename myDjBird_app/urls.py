@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'^post_tweet/$', views.post_update, name='post_tweet'),
     url(r'^view_user_profile/(?P<user_id>\w+)/$', views.view_user_profile, name='view_user_profile'),
+    url(r'^search_users/(?P<user_name>\w+)/$', views.search_users, name='search_users'),  # search_users
     url(r'^post_like/(?P<status_id>\w+)/$', views.post_like, name='post_like'),
     url(r'^post_dislike/(?P<status_id>\w+)/$', views.post_dislike, name='post_dislike'),
     url(r'^view_post/(?P<status_id>\w+)/$', views.view_post, name='view_post'),

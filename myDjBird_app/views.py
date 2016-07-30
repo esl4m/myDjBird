@@ -134,6 +134,17 @@ def view_user_profile(request, user_id):
     })
 
 
+def search_users(request, user_name):
+    user_name = str(user_name)
+    try:  # if user exists
+        user_id = User.objects.get(username=user_name).pk
+        return HttpResponseRedirect('/myDjBird_app/view_user_profile/%s' % user_id)
+
+    except User.DoesNotExist:
+        print("user doesn't exists")
+        return HttpResponseRedirect('/myDjBird_app/list_users')
+
+
 def view_post(request, status_id):
     status_id = int(status_id)
     likes_count = Likes.objects.filter(status_id=status_id).count()
