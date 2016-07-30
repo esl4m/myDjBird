@@ -30,7 +30,7 @@
             </li>
             {% if user.is_authenticated %}
                 <li role="presentation" id="logout">
-                    <a href="/myDjBird_app/accounts/logout">Logout</a>
+                    <a href="/myDjBird_app/accounts/logout">Logout {{user}}</a>
                 </li>
             {% else %}
                 <li role="presentation" id="login">

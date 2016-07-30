@@ -172,6 +172,17 @@ def post_reply(request, status_id):
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')
+def post_delete(request, status_id):
+    status_id = int(status_id)
+    del_post = Timeline.objects.get(id=status_id)
+    if del_post.user == request.user:  # check if this tweet by the user or not , if not he can't delete it.
+        del_post.delete()
+    else:
+        print("You can't delete this post")  # TO_DO : return this error to user ..
+    return HttpResponseRedirect('/myDjBird_app/show_profile')  # Redirect him to his profile after deleting !
+
+
+@login_required(login_url='/myDjBird_app/accounts/login/')
 def follow(request, user_id):
     """
     Method is used to follow user.

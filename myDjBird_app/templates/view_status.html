@@ -29,6 +29,13 @@
                             <a href="/myDjBird_app/post_reply/{{post.id}}" title="Add Reply">
                                 <i class="fa fa-reply" aria-hidden="true"></i>
                             </a>
+                            <!-- Make sure if this status belongs to the one who added it. If yes he can delete it. -->
+                            {% if post.user == request.user %}
+                            &nbsp;&nbsp;
+                            <a href="/myDjBird_app/post_delete/{{post.id}}" title="Delete" class="cmt_del" data-confirm="true">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </a>
+                            {% endif %}
                             &nbsp;&nbsp;
                             <a href="/myDjBird_app/post_like/{{post.id}}" title="Likes count {{likes_count}}">
                                 <i class="fa fa-thumbs-up" aria-hidden="true">{{likes_count}}</i>
@@ -81,4 +88,10 @@
         </div>
     {% endif %}
 </div>
+
+<script>
+$('*[data-confirm="true"]').on('click', function() {
+    return confirm("Are you sure?");
+});
+</script>
 {% endblock %}
