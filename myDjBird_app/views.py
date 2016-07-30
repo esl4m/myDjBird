@@ -145,6 +145,17 @@ def search_users(request, user_name):
         return HttpResponseRedirect('/myDjBird_app/list_users')
 
 
+def search_tweets(request, status_id):
+    status_id = int(status_id)
+    try:  # if tweet exists in timeline
+        tweet = Timeline.objects.get(pk=status_id)
+        return HttpResponseRedirect('/myDjBird_app/view_post/%s' % tweet.id)
+
+    except Timeline.DoesNotExist:
+        print("Tweet doesn't exists")
+        return HttpResponseRedirect('/myDjBird_app/show_profile')
+
+
 def view_post(request, status_id):
     status_id = int(status_id)
     likes_count = Likes.objects.filter(status_id=status_id).count()
