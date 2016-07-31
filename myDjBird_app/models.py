@@ -64,8 +64,6 @@ class Dislikes(models.Model):
 
 
 class Follow(models.Model):
-    # user = models.ForeignKey(User, unique=True, on_delete=models.CASCADE)
-    # follows = models.ManyToManyField('self', related_name='follows', symmetrical=False)
     following = models.ForeignKey(User, related_name="who_follows")
     follower = models.ForeignKey(User, related_name="who_is_followed")
     follow_time = models.DateTimeField(db_index=True, auto_now_add=True)

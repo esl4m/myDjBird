@@ -47,22 +47,10 @@
                 </div>
             </div>
         </div>
-
-            <!--User ID : {{ user.id }}-->
-            <!--<ul>-->
-                <!--{% if user.profile_picture %}-->
-                    <!--{% static "" as baseUrl %}-->
-                    <!--<img src="{{ baseUrl }}profile_pictures/{{user.profile_picture}}" width="100" alt="{{user.username}}" />-->
-                <!--{% else %}-->
-                    <!--<p> User didn't add profile picture. </p>-->
-                <!--{% endif %}-->
-                <!--<li><a href="{{ user.id}}">{{ user.username }}</a></li>-->
-                <!--<li>{{ user.email }}</li>-->
-            <!--</ul>-->
-        {% endfor %}
-{% else %}
+    {% endfor %}
+    {% else %}
         <p>There are no users.</p>
-{% endif %}
+    {% endif %}
     </div>
 </div>
 <script type="text/javascript">

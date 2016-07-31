@@ -15,9 +15,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated():
+        user = request.user
+    else:
+        user = ''
     timeline = Timeline.objects.all().order_by('-date')[:49]
     return render_to_response('index.html', {
-        'user': request.user,
+        'user': user,
         'timeline': timeline,
     })
 

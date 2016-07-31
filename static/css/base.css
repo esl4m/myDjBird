@@ -10,7 +10,7 @@
     max-width: 340px; // orginal twitter width: 290px;
 }
 .twPc-bg {
-    background-image: url("https://pbs.twimg.com/profile_banners/50988711/1384539792/600x200");
+    background-image: url("../images/600x200.jpg");
     background-position: 0 50%;
     background-size: 100% auto;
     border-bottom: 1px solid #e1e8ed;

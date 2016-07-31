@@ -2,36 +2,49 @@
 {% load staticfiles %}
 {% block head_title %}DjBird - Home page{% endblock %}
 {% block content %}
-    <!--{% if user.username %}-->
-        <!--<p>Welcome : {{ user.username }}, ID : {{user.id}}</p>-->
-        <!--<a href="accounts/logout/">Logout</a>-->
-    <!--{% else %}-->
-        <!--<a href="accounts/login/">Login</a>-->
-    <!--{% endif %}-->
+
 <div class="col-md-12">
-    {% if timeline %}
-        {% for post in timeline %}
-            <ul class="timeline">
-                <li>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <span style="font-size: large">
-                                <a href="/myDjBird_app/view_user_profile/{{post.user_id}}">{{post.user}}</a> says :
-                            </span>
+    {% if user %}
+    <!-- If user logged in -->
+        {% if timeline %}
+            {% for post in timeline %}
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <span style="font-size: large">
+                                    <a href="/myDjBird_app/view_user_profile/{{post.user_id}}">{{post.user}}</a> says :
+                                </span>
+                            </div>
+                            <div class="timeline-body">
+                                <p>{{post.content}}</p>
+                            </div>
+                                <div class="timeline-footer">
+                                <p class="text-center"><a href="view_post/{{post.id}}" title="click to show post">{{post.date}}</a></p>
+                            </div>
                         </div>
-                        <div class="timeline-body">
-                            <p>{{post.content}}</p>
-                        </div>
-                            <div class="timeline-footer">
-                            <p class="text-center"><a href="view_post/{{post.id}}" title="click to show post">{{post.date}}</a></p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        {% endfor %}
+                    </li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <p>There are no tweets .. Start Following some users </p>
+        {% endif %}
     {% else %}
-        <p>There are no tweets .. Start Following some users </p>
+        <!-- If user not logged in -->
+        <div class="welcome page">
+            <h1 class="text-center"> Welcome to DjBird .. </h1>
+            <p class="text-center">
+                You can <a href="accounts/login" >login</a> or <a href="accounts/register">register</a> new account.
+            </p>
+            <p class="text-center">
+                Connect with your friends — Following each other.
+            </p>
+            <p class="text-center">
+                See their profiles and their updates.
+            </p>
+        </div>
     {% endif %}
+
 </div>
 <script type="text/javascript">
     window.onload=function () {

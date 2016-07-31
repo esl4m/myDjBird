@@ -1,12 +1,40 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-
 {% block head_title %}DjBird - About page{% endblock %}
-{% block title %} About DjBird for tweets ..{% endblock%}
-
 {% block content %}
-About DjBird
-
+<div class="row">
+    <div class="col-md-12">
+        <h1>About DjBird</h1>
+        <p class="text-center">
+            DjBird is a simple Python-Django project.
+        </p>
+        <br/>
+        <p class="text-center">
+            You can create new account and start following other people. You have a simple timeline
+            showing your username and your profile picture.
+            <br/>
+            Also you can see numbers of tweets, followers and following.
+            <br/>
+            You can show your tweet and you can delete it, Also you can like, dislike and reply on your tweet
+            and other tweets.
+            <br/>
+            If this tweet has replies, it will be shown under it.
+            <br/>
+            You can see list of users profiles and you can follow / unfollow them.
+            Also if you clicked on any profile, you can see their info and updates.
+        </p>
+        <br/>
+        <p class="text-center">
+            This is still a beta version , so don't be sad if you see some bugs :D
+            <br/><br/>
+            And it will be great if you want to send me your comments on my email : me@esl4m.com
+        </p>
+        <br/><br/>
+        <p class="text-center">
+            Thank you for your time and enjoy using DjBird :)
+        </p>
+    </div>
+</div>
 <script type="text/javascript">
     window.onload=function () {
         $('#about').addClass('active');
