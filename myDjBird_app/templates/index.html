@@ -2,7 +2,8 @@
 {% load staticfiles %}
 {% block head_title %}DjBird - Home page{% endblock %}
 {% block content %}
-
+<div class="container">
+<div class="row">
 <div class="col-md-12">
     {% if user %}
     <!-- If user logged in -->
@@ -11,23 +12,69 @@
                 <ul class="timeline">
                     <li>
                         <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <span style="font-size: large">
-                                    <a href="/myDjBird_app/view_user_profile/{{post.user_id}}">{{post.user}}</a> says :
-                                </span>
+                            <div class="col-md-1">
+                                {% static "" as baseUrl %}
+                                {% if post.user.users.profile_picture%}
+                                    <img class="dj-avatar img-circle"
+                                         src="{{ baseUrl }}profile_pictures/{{post.user.users.profile_picture}}"
+                                         alt="{{post.user}}" />
+                                {% else %}
+                                    <img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/default-pic.jpg" alt="Default Image" />
+                                {% endif %}
                             </div>
-                            <div class="timeline-body">
-                                <p>{{post.content}}</p>
-                            </div>
-                                <div class="timeline-footer">
-                                <p class="text-center"><a href="view_post/{{post.id}}" title="click to show post">{{post.date}}</a></p>
+                            <div class="col-md-11">
+                                <div class="timeline-heading">
+                                    <span style="font-size: large">
+                                        <a href="/myDjBird_app/view_user_profile/{{post.user_id}}">{{post.user}}</a> says :
+                                    </span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>{{post.content}}</p>
+                                </div>
+                                    <div class="timeline-footer">
+                                    <p class="text-center"><a href="view_post/{{post.id}}" title="click to show post">{{post.date}}</a></p>
+                                </div>
                             </div>
                         </div>
                     </li>
                 </ul>
             {% endfor %}
         {% else %}
-            <p>There are no tweets .. Start Following some users </p>
+            <br/>
+            <p>There are no tweets and no followers.. Start Following some users </p>
+            <br/>
+            <p class="text-center">
+                Recommend based on activity
+            </p>
+                <ul class="timeline">
+                    <li>
+                    <div class="timeline-panel">
+                        <div class="col-md-1">
+                            {% static "" as baseUrl %}
+                            {% if recommended.user.users.profile_picture%}
+                                <img class="dj-avatar img-circle"
+                                     src="{{ baseUrl }}profile_pictures/{{recommended.user.users.profile_picture}}"
+                                     alt="{{recommended.user}}" />
+                            {% else %}
+                                <img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/default-pic.jpg" alt="Default Image" />
+                            {% endif %}
+                        </div>
+                        <div class="col-md-11">
+                            <div class="timeline-heading">
+                                <span style="font-size: large">
+                                    <a href="/myDjBird_app/view_user_profile/{{recommended.user_id}}">{{recommended.user}}</a> says :
+                                </span>
+                            </div>
+                            <div class="timeline-body">
+                                <p>{{recommended.content}}</p>
+                            </div>
+                                <div class="timeline-footer">
+                                <p class="text-center"><a href="view_post/{{recommended.id}}" title="click to show post">{{recommended.date}}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    </li>
+                </ul>
         {% endif %}
     {% else %}
         <!-- If user not logged in -->
@@ -45,6 +92,8 @@
         </div>
     {% endif %}
 
+</div>
+</div>
 </div>
 <script type="text/javascript">
     window.onload=function () {

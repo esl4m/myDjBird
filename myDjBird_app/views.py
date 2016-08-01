@@ -12,17 +12,30 @@ from django.contrib.auth.decorators import login_required
 from .models import Users, Timeline, Replies, Likes, Dislikes, Follow
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from collections import Counter
 
 # Create your views here.
 def index(request):
     if request.user.is_authenticated():
         user = request.user
+        # Check if user follows others users .. display their timeline.
+        i_follow = Follow.objects.filter(follower=user)  # get all users I follow !
+        i_follow = i_follow.values_list('following')
+        i_follow = [int(e[0]) for e in i_follow]  # Get all user ids in a list
+        i_follow.append(user.id)  # Append list with current user (the timeline contains followers and the current user)
+        # Then get all timeline (me and users i follow) show the latest 50 tweets
+        timeline = Timeline.objects.filter(user_id__in=i_follow).order_by('-date')[:49]
     else:
         user = ''
-    timeline = Timeline.objects.all().order_by('-date')[:49]
+        timeline = ''
+    # Get the most active user and display his latest status !
+    most_active_user = Counter(Timeline.objects.order_by('-date').values_list('user_id', flat=True).distinct())
+    most_active_user = most_active_user.most_common(1)[0][0]
+    recommended = Timeline.objects.filter(user_id=most_active_user).order_by('-date')[0]  # get latest status for the most active user.
     return render_to_response('index.html', {
         'user': user,
         'timeline': timeline,
+        'recommended': recommended,
     })
 
 
