@@ -46,7 +46,7 @@ def list_users(request):
     if request.user.is_authenticated():
         i_follow = Follow.objects.filter(follower=request.user)  # get all users I follow !
         i_follow = i_follow.values_list('following')
-        i_follow = [int(e[0]) for e in i_follow]
+        i_follow = [int(e[0]) for e in i_follow]  # Get all user ids in a list
     else:
         i_follow = ''
     return render(request, 'list_users.html', {
@@ -297,24 +297,32 @@ def unfollow(request, user_id):
 def post_like(request, status_id):
     status_id = int(status_id)
     timeline_id = Timeline.objects.get(id=status_id)
-    new_like = Likes(
-        user=request.user,
-        status_id=timeline_id,
-    )
-    new_like.save()
-    return HttpResponseRedirect('/myDjBird_app/')
+    if timeline_id.user == request.user:
+        # User already liked it before #
+        print('Already Liked !')
+    else:
+        new_like = Likes(
+            user=request.user,
+            status_id=timeline_id,
+        )
+        new_like.save()
+    return HttpResponseRedirect('/myDjBird_app/view_post/%s' % status_id)
 
 
 @login_required(login_url='/myDjBird_app/accounts/login/')
 def post_dislike(request, status_id):
     status_id = int(status_id)
     timeline_id = Timeline.objects.get(id=status_id)
-    new_dislike = Dislikes(
-        user=request.user,
-        status_id=timeline_id,
-    )
-    new_dislike.save()
-    return HttpResponseRedirect('/myDjBird_app/')
+    if timeline_id.user == request.user:
+        # User already liked it before #
+        print('Already Disliked !')
+    else:
+        new_dislike = Dislikes(
+            user=request.user,
+            status_id=timeline_id,
+        )
+        new_dislike.save()
+    return HttpResponseRedirect('/myDjBird_app/view_post/%s' % status_id)
 
 
 def logout_page(request):
