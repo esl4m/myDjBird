@@ -13,6 +13,7 @@ from .models import Users, Timeline, Replies, Likes, Dislikes, Follow
 from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from collections import Counter
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 def index(request):
@@ -310,9 +311,14 @@ def unfollow(request, user_id):
 def post_like(request, status_id):
     status_id = int(status_id)
     timeline_id = Timeline.objects.get(id=status_id)
-    if timeline_id.user == request.user:
+    # print(timeline_id.user, '///////', request.user)
+    # print(status_id, '/////////', request.user)
+    likes = Likes.objects.filter(status_id=status_id)
+    users_like = likes.values_list('user', flat=True)
+    if request.user.id in users_like:
         # User already liked it before #
         print('Already Liked !')
+        # raise PermissionDenied
     else:
         new_like = Likes(
             user=request.user,
@@ -326,9 +332,14 @@ def post_like(request, status_id):
 def post_dislike(request, status_id):
     status_id = int(status_id)
     timeline_id = Timeline.objects.get(id=status_id)
-    if timeline_id.user == request.user:
+
+    dislikes = Dislikes.objects.filter(status_id=status_id)
+    users_dislike = dislikes.values_list('user', flat=True)
+
+    if request.user.id in users_dislike:
         # User already liked it before #
         print('Already Disliked !')
+        # raise PermissionDenied
     else:
         new_dislike = Dislikes(
             user=request.user,
