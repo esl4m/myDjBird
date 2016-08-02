@@ -127,7 +127,8 @@ def register_user(request):
                 email=form.cleaned_data['email'],
                 profile_picture=profile_pic,
                 # profile_picture=form.cleaned_data['profile_picture'],
-                password=form.cleaned_data['password1'])
+                # password=form.cleaned_data['password1']
+                )
             dj_user.save()
             return HttpResponseRedirect('complete')
     else:
