@@ -26,13 +26,18 @@ def index(request):
         i_follow.append(user.id)  # Append list with current user (the timeline contains followers and the current user)
         # Then get all timeline (me and users i follow) show the latest 50 tweets
         timeline = Timeline.objects.filter(user_id__in=i_follow).order_by('-date')[:49]
+
+        # Get the most active user and display his latest status !
+        most_active_user = Counter(Timeline.objects.order_by('-date').values_list('user_id', flat=True).distinct())
+        if most_active_user:
+            most_active_user = most_active_user.most_common(1)[0][0]
+            recommended = Timeline.objects.filter(user_id=most_active_user).order_by('-date')[0]  # get latest status for the most active user.
+        else:
+            recommended = 'no users'
     else:
         user = ''
         timeline = ''
-    # Get the most active user and display his latest status !
-    most_active_user = Counter(Timeline.objects.order_by('-date').values_list('user_id', flat=True).distinct())
-    most_active_user = most_active_user.most_common(1)[0][0]
-    recommended = Timeline.objects.filter(user_id=most_active_user).order_by('-date')[0]  # get latest status for the most active user.
+        recommended = ''
     return render_to_response('index.html', {
         'user': user,
         'timeline': timeline,
@@ -117,6 +122,7 @@ def register_user(request):
             else:
                 profile_pic = request.FILES['profile_picture']
             dj_user = Users(
+                id=user.id,
                 user=user,
                 email=form.cleaned_data['email'],
                 profile_picture=profile_pic,
