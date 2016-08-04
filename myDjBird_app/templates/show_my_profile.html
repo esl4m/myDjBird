@@ -9,12 +9,14 @@
         <div class="col-md-12">
             <div class="col-md-8"></div>
             <div class="col-md-4">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search tweets (by tweet id)..." onchange="getTweet(this);" id="tweet">
-                    <span class="input-group-btn">
-                        <a href="search_tweets/+ document.getElementById('tweet').value" class="btn btn-default ajax-link">Go!</a>
-                    </span>
-                </div><!-- /input-group -->
+                <form type="get" action="search_tweets/" class="form-inline">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search tweets..." name="search_box" id="search_box">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" id="search_submit">Go!</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </form>
             </div><!-- /.col-lg-4 -->
         </div>
         <div class="twPc col-md-12">
@@ -95,16 +97,7 @@
                                 </div>
                             </div>
                         </li>
-                        <!--<li class="clearfix no-float"></li>-->
                     </ul>
-                    <!--<div class="stream">-->
-                        <!--<ul>-->
-                            <!--<li>-->
-                                <!--<div></div>-->
-                                <!--<div>{{post.date}}</div>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
                 {% endfor %}
             {% else %}
                 <p>There are no tweets .. Add yours </p>
@@ -117,10 +110,5 @@
     window.onload=function () {
         $('#profile').addClass('active');
     };
-
-    function getTweet(ele){
-        var href="search_tweets/"+$(ele).val();
-        $(".ajax-link").attr("href",""+href);
-    }
 </script>
 {% endblock %}

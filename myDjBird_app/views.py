@@ -170,17 +170,24 @@ def search_users(request, user_name):
         return HttpResponseRedirect('/myDjBird_app/list_users')
 
 
-def search_tweets(request, status_id):
-    try:  # if tweet exists in timeline
-        status_id = int(status_id)
-        tweet = Timeline.objects.get(pk=status_id)
-        return HttpResponseRedirect('/myDjBird_app/view_post/%s' % tweet.id)
-    except Timeline.DoesNotExist:
-        print("Tweet doesn't exists")
-        return HttpResponseRedirect('/myDjBird_app/show_profile')
-    except ValueError:
-        print("Value error not int")
-        return HttpResponseRedirect('/myDjBird_app/show_profile')
+def search_tweets(request):
+    if request.method == 'GET':  # If the form is submitted
+        search_query = request.GET.get('search_box', None)
+        # print(search_query)
+        # MyItem.objects.filter(title__search="some search text")
+    # print(status_id)
+        try:  # if tweet exists in timeline
+            status_content = str(search_query)
+            # tweet = Timeline.objects.get(pk=status_content)
+            tweet = Timeline.objects.get(content__regex=status_content)
+            # print(tweet.id)
+            return HttpResponseRedirect('/myDjBird_app/view_post/%s' % tweet.id)
+        except Timeline.DoesNotExist:
+            print("Tweet doesn't exists")
+            return HttpResponseRedirect('/myDjBird_app/show_profile')
+    # except ValueError:
+    #     print("Value error not int")
+    #     return HttpResponseRedirect('/myDjBird_app/show_profile')
 
 def view_post(request, status_id):
     status_id = int(status_id)
