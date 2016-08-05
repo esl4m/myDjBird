@@ -30,7 +30,7 @@ $ pip install -r requirements.txt    # (to install all requirements)
 
 * Clone latest version
 ```
-$ git clone https://github.com/esl4m/
+$ git clone https://github.com/esl4m/myDjBird.git
 ```
 
 * Create mysql Database :
