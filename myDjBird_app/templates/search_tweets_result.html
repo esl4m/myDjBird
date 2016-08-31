@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head_title %}DjBird - Tweets search result{% endblock %}
+{% block content %}
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+    {% if user %}
+    <!-- If user logged in -->
+        {% if tweets_res %}
+            <p class="text-center">
+                We found something including the words you searched for
+            </p>
+            <p class="text-center">
+                :) :)
+            </p>
+
+            <br/>
+            {% for post in tweets_res %}
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-panel">
+                            <div class="col-md-1">
+                                {% static "" as baseUrl %}
+                                {% if post.user.users.profile_picture%}
+                                    <img class="dj-avatar img-circle"
+                                         src="{{ baseUrl }}profile_pictures/{{post.user.users.profile_picture}}"
+                                         alt="{{post.user}}" />
+                                {% else %}
+                                    <img class="dj-avatar img-circle" src="{{ baseUrl }}profile_pictures/default-pic.jpg" alt="Default Image" />
+                                {% endif %}
+                            </div>
+                            <div class="col-md-11">
+                                <div class="timeline-heading">
+                                    <span style="font-size: large">
+                                        <a href="/myDjBird_app/view_user_profile/{{post.user_id}}">{{post.user}}</a> says :
+                                    </span>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>{{post.content}}</p>
+                                </div>
+                                    <div class="timeline-footer">
+                                    <p class="text-center"><a href="/myDjBird_app/view_post/{{post.id}}" title="click to show post">{{post.date}}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <br/>
+            <p class="text-center"> Sorry ... we couldn't find anything in these words </p>
+            <p class="text-center"> :( </p>
+        {% endif %}
+    {% else %}
+        <!-- If user not logged in -->
+        <div class="welcome page">
+            <h1 class="text-center"> Welcome to DjBird .. </h1>
+            <p class="text-center">
+                You can <a href="accounts/login" >login</a> or <a href="accounts/register">register</a> new account.
+            </p>
+            <p class="text-center">
+                Connect with your friends — Following each other.
+            </p>
+            <p class="text-center">
+                See their profiles and their updates.
+            </p>
+        </div>
+    {% endif %}
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    window.onload=function () {
+        $('#profile').addClass('active');
+    };
+</script>
+{% endblock %}

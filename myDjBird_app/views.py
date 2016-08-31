@@ -173,21 +173,24 @@ def search_users(request, user_name):
 def search_tweets(request):
     if request.method == 'GET':  # If the form is submitted
         search_query = request.GET.get('search_box', None)
-        # print(search_query)
-        # MyItem.objects.filter(title__search="some search text")
-    # print(status_id)
         try:  # if tweet exists in timeline
+            tweets_res = []
             status_content = str(search_query)
-            # tweet = Timeline.objects.get(pk=status_content)
-            tweet = Timeline.objects.get(content__regex=status_content)
-            # print(tweet.id)
-            return HttpResponseRedirect('/myDjBird_app/view_post/%s' % tweet.id)
+            tweet = Timeline.objects.filter(content__contains=status_content)
+            # tweet = Timeline.objects.get(content__regex=status_content)  # old way that required MyISAM
+            tweet_ids = tweet.values_list('id')
+            list_of_tweets = [int(e[0]) for e in tweet_ids]  # get list of tweets
+            for i in range(len(list_of_tweets)):
+                tweet_data = get_object_or_404(Timeline, pk=list_of_tweets[i])
+                tweets_res.append(tweet_data)
+            return render(request, 'search_tweets_result.html', {
+                'tweets_res': tweets_res,
+            })
+
         except Timeline.DoesNotExist:
             print("Tweet doesn't exists")
             return HttpResponseRedirect('/myDjBird_app/show_profile')
-    # except ValueError:
-    #     print("Value error not int")
-    #     return HttpResponseRedirect('/myDjBird_app/show_profile')
+
 
 def view_post(request, status_id):
     status_id = int(status_id)
