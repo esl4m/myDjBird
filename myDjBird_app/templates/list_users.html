@@ -11,7 +11,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search Users (by user name)..." onchange="getUserName(this);" id="user_name">
                 <span class="input-group-btn">
-                    <a href="search_users/+ document.getElementById('user_name').value" class="btn btn-default ajax-link">Go!</a>
+                    <a href="/myDjBird_app/search_users/+ document.getElementById('user_name').value" class="btn btn-default ajax-link">Go!</a>
                 </span>
             </div><!-- /input-group -->
         </div>
@@ -59,7 +59,7 @@
     };
 
     function getUserName(ele){
-        var href="search_users/"+$(ele).val();
+        var href="/myDjBird_app/search_users/"+$(ele).val();
         $(".ajax-link").attr("href",""+href);
     }
 </script>
