@@ -57,14 +57,6 @@ python manage.py createsuperuser
 ```
 $ python manage.py runserver 
 ```
-
-Go back to mysql and run
-```
-$ mysql --user=root --password=root
-$ Use dj_bird ;
-$ ALTER TABLE timeline ENGINE=MYISAM; 
-```
-We did this step to be able to search text in tweets.
 <br/>
 To access the application .. type on your browser 
 ```
