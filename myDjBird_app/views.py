@@ -171,18 +171,11 @@ def search_users(request, user_name):
 
 
 def search_tweets(request):
-    if request.method == 'GET':  # If the form is submitted
+    if request.method == 'GET':  # If form submitted
         search_query = request.GET.get('search_box', None)
-        try:  # if tweet exists in timeline
-            tweets_res = []
+        try:  # if tweet exists
             status_content = str(search_query)
-            tweet = Timeline.objects.filter(content__contains=status_content)
-            # tweet = Timeline.objects.get(content__regex=status_content)  # old way that required MyISAM
-            tweet_ids = tweet.values_list('id')
-            list_of_tweets = [int(e[0]) for e in tweet_ids]  # get list of tweets
-            for i in range(len(list_of_tweets)):
-                tweet_data = get_object_or_404(Timeline, pk=list_of_tweets[i])
-                tweets_res.append(tweet_data)
+            tweets_res = Timeline.objects.filter(content__contains=status_content)
             return render(request, 'search_tweets_result.html', {
                 'tweets_res': tweets_res,
             })
