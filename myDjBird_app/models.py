@@ -23,6 +23,9 @@ class Users(models.Model):
         db_table = 'users'
         verbose_name_plural = "users"
 
+    def __unicode__(self):
+        return unicode(self.user)
+
 
 class Timeline(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -33,6 +36,8 @@ class Timeline(models.Model):
         db_table = 'timeline'
         verbose_name_plural = "timeline"
 
+    def __unicode__(self):
+        return unicode(self.pk)
 
 class Replies(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -44,6 +49,9 @@ class Replies(models.Model):
         db_table = 'replies'
         verbose_name_plural = "replies"
 
+    def __unicode__(self):
+        return unicode(self.pk)
+
 
 class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -53,6 +61,9 @@ class Likes(models.Model):
         db_table = 'likes'
         verbose_name_plural = "likes"
 
+    def __unicode__(self):
+        return unicode(self.pk)
+
 
 class Dislikes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -61,6 +72,9 @@ class Dislikes(models.Model):
     class Meta:
         db_table = 'dislikes'
         verbose_name_plural = "dislikes"
+
+    def __unicode__(self):
+        return unicode(self.pk)
 
 
 class Follow(models.Model):
@@ -72,3 +86,5 @@ class Follow(models.Model):
         db_table = 'Follow'
         verbose_name_plural = "Follow"
 
+    def __unicode__(self):
+        return unicode(self.follow_time)
