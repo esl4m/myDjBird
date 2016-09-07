@@ -15,6 +15,19 @@ from django.http import HttpResponse, HttpResponseRedirect
 from collections import Counter
 from django.core.exceptions import PermissionDenied
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+@receiver(post_save, sender=User)
+def init_new_user(sender, instance, signal, created, **kwargs):
+    """
+    Create an authentication token for newly created users.
+    """
+    if created:
+        Token.objects.create(user=instance)
+
+
 # Create your views here.
 def index(request):
     if request.user.is_authenticated():
