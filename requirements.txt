@@ -3,3 +3,6 @@ django==1.8
 MySQL-python
 python-dateutil
 pillow
+djangorestframework
+httpie
+django-filter
