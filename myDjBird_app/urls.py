@@ -5,7 +5,7 @@
 #
 
 from django.conf.urls import url
-from . import views
+from . import views, api_views
 from django.contrib import admin
 admin.autodiscover()
 
@@ -30,4 +30,13 @@ urlpatterns = [
     url(r'^follow/(?P<user_id>\w+)/$', views.follow, name='follow'),
     url(r'^unfollow/(?P<user_id>\w+)/$', views.unfollow, name='unfollow'),
     url(r'^accounts/logout/$', views.logout_page, name='logout'),
+
+    url(r'^api/users/$', api_views.UsersList.as_view()),
+    url(r'^api/timeline/$', api_views.TimelineList.as_view()),
+    url(r'^api/users/(?P<pk>[0-9]+)/$', api_views.UsersDetail.as_view()),
+    url(r'^api/timeline/(?P<pk>[0-9]+)/$', api_views.TimelineDetail.as_view()),
+
+    url(r'^api/token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
+    url(r'^api/authview/', api_views.AuthView.as_view()),
+    # url(r'^api/testview/', api_views.TestView.as_view()),
 ]
