@@ -16,6 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esl4m.djbird.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -76,6 +84,45 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(getString(R.string.api_base_url) + getString(R.string.api_login_url), params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                // called before request is started
+                Log.v("Login", "Task started");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                // called when response HTTP status is "200 OK"
+                String str = null;
+                try {
+                    str = new String(response, "UTF-8");
+                    JSONObject json = new JSONObject(str);
+                    String token = String.valueOf(json.get("token"));
+                    Log.v("Login", token);
+//                            finish();
+//                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.v("Login",String.valueOf(response));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                Log.v("Login", "Task Failed " + statusCode);
+            }
+
+            @Override
+            public void onRetry(int retryNo) {
+                // called when request is retried
+            }
+        });
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
