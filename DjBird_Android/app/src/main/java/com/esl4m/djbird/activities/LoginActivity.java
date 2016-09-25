@@ -80,10 +80,15 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _username.getText().toString();
-        String password = _passwordText.getText().toString();
+        String enteredUsername = _username.getText().toString();
+        String enteredPassword = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
+        RequestParams params = new RequestParams();
+//                username='hello' password='123'
+        params.add("username", enteredUsername);
+        params.add("password", enteredPassword);
+
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(getString(R.string.api_base_url) + getString(R.string.api_login_url), params, new AsyncHttpResponseHandler() {
 
