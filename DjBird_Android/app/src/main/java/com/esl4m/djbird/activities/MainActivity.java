@@ -1,6 +1,6 @@
 package com.esl4m.djbird.activities;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esl4m.djbird.R;
 
@@ -27,15 +28,15 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Login Text View
-        txt_open_login = (TextView)findViewById(R.id.txt_open_login);
-        txt_open_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                startActivity(new Intent(getBaseContext(), LoginActivity.class));
-            }
-        });
+
+
+        SharedPreferences prefs = getSharedPreferences("user_data", MODE_PRIVATE);
+        String username = prefs.getString("username", null);
+        Toast.makeText(this, "Welcome .. " + username, Toast.LENGTH_LONG).show();
+
+        TextView welcome_user = (TextView) findViewById(R.id.welcome_user);
+        welcome_user.setText("Welcome .. " + username);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,9 +54,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -102,7 +100,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.logout) {
+
 
         } else if (id == R.id.nav_share) {
 

@@ -27,22 +27,9 @@
         android:layout_centerHorizontal="true"/>
 
     <TextView
+        android:id="@+id/welcome_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Welcome to DjBird .."/>
-    <TextView
-        android:id="@+id/txt_open_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_gravity="center"
-        android:text="You can login or register new account.
-        " />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Connect with your friends — Following each other.
-            See their profiles and their updates."/>
+        android:layout_gravity="center" />
+
 </LinearLayout>

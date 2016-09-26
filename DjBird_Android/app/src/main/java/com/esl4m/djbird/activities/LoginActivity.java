@@ -6,6 +6,7 @@ package com.esl4m.djbird.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,7 +19,7 @@ import android.widget.Toast;
 import com.esl4m.djbird.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.*;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ import java.io.UnsupportedEncodingException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -36,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
     @Bind(R.id.link_signup) TextView _signupLink;
+    private String enteredUsername;
+    private String enteredPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,12 +84,25 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String enteredUsername = _username.getText().toString();
-        String enteredPassword = _passwordText.getText().toString();
+        enteredUsername = _username.getText().toString();
+        enteredPassword = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
+        loginRequest();
+
+        new android.os.Handler().postDelayed(
+            new Runnable() {
+                public void run() {
+                    // On complete call either onLoginSuccess or onLoginFailed
+                    onLoginSuccess();
+                    onLoginFailed();
+                    progressDialog.dismiss();
+                }
+            }, 3000);
+    }
+
+    private void loginRequest() {
         RequestParams params = new RequestParams();
-//                username='hello' password='123'
         params.add("username", enteredUsername);
         params.add("password", enteredPassword);
 
@@ -106,9 +123,12 @@ public class LoginActivity extends AppCompatActivity {
                     str = new String(response, "UTF-8");
                     JSONObject json = new JSONObject(str);
                     String token = String.valueOf(json.get("token"));
-                    Log.v("Login", token);
-//                            finish();
-//                            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                    Log.v("Token", token);
+                    SharedPreferences.Editor editor = getSharedPreferences("user_data", MODE_PRIVATE).edit();
+                    editor.putString("token", token);
+                    editor.commit();
+                    getUserInfo(token);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -128,16 +148,56 @@ public class LoginActivity extends AppCompatActivity {
                 // called when request is retried
             }
         });
+    }
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+    private void getUserInfo(String token) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("Authorization", "Token "+token);
+        client.post(getString(R.string.api_base_url) + getString(R.string.api_get_user_info), new AsyncHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                // called before request is started
+                Log.v("Login", "Task started");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                // called when response HTTP status is "200 OK"
+                String str = null;
+                try {
+                    str = new String(response, "UTF-8");
+                    JSONObject json = new JSONObject(str);
+                    String username = String.valueOf(json.get("username"));
+                    String email = String.valueOf(json.get("email"));
+                    String profile_picture = String.valueOf(json.get("profile_picture"));
+//                    Log.v("Token", username);
+                    SharedPreferences.Editor editor = getSharedPreferences("user_data", MODE_PRIVATE).edit();
+                    editor.putString("username", username);
+                    editor.putString("email", email);
+                    editor.putString("profile_picture", profile_picture);
+                    editor.commit();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.v("Login",String.valueOf(response));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                Log.v("Login", "Task Failed " + statusCode);
+            }
+
+            @Override
+            public void onRetry(int retryNo) {
+                // called when request is retried
+            }
+        });
     }
 
 
