@@ -1,5 +1,6 @@
 package com.esl4m.djbird.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.esl4m.djbird.R;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
 
         SharedPreferences prefs = getSharedPreferences("user_data", MODE_PRIVATE);
         String username = prefs.getString("username", null);
-        Toast.makeText(this, "Welcome .. " + username, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Welcome .. " + username, Toast.LENGTH_LONG).show();
 
         TextView welcome_user = (TextView) findViewById(R.id.welcome_user);
         welcome_user.setText("Welcome .. " + username);
@@ -94,15 +94,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.profile) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.logout) {
-
-
+            SharedPreferences.Editor editor = getSharedPreferences("user_data", MODE_PRIVATE).edit();
+            editor.putString("token", null);
+            editor.putString("username", null);
+            editor.putString("email", null);
+            editor.putString("profile_picture", null);
+            editor.commit();
+            Intent intent = new Intent(this, SplashActivity.class);
+            finish();
+            startActivity(intent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
