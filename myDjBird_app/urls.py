@@ -37,6 +37,11 @@ urlpatterns = [
     url(r'^api/timeline/(?P<pk>[0-9]+)/$', api_views.TimelineDetail.as_view()),
 
     url(r'^api/token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
+    # http http://127.0.0.1:8000/myDjBird_app/api/token-auth/ username='USERNAME' password='PASSWORD'
+
     url(r'^api/authview/', api_views.AuthView.as_view()),
-    # url(r'^api/testview/', api_views.TestView.as_view()),
+    # http http://127.0.0.1:8000/myDjBird_app/api/authview/ 'Authorization: Token YOUR_TOKEN'
+
+    url(r'^api/list_users/', api_views.UsersList.as_view()),
+    url(r'^api/timeline/', api_views.TimelineList.as_view()),
 ]
