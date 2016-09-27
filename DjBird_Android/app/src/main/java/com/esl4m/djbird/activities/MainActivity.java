@@ -95,10 +95,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.profile) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            // display user profile
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.users) {
+            // List all users
+
+        } else if (id == R.id.about) {
+            Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+            startActivityForResult(intent, 0);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
         } else if (id == R.id.logout) {
             SharedPreferences.Editor editor = getSharedPreferences("user_data", MODE_PRIVATE).edit();

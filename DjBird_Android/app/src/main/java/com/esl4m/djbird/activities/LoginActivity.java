@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.link_signup) TextView _signupLink;
     private String enteredUsername;
     private String enteredPassword;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,8 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
+        progressDialog = new ProgressDialog(LoginActivity.this, R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void run() {
                     // On complete call either onLoginSuccess or onLoginFailed
                     onLoginSuccess();
-                    onLoginFailed();
+//                    onLoginFailed();
                     progressDialog.dismiss();
                 }
             }, 3000);
@@ -176,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("email", email);
                     editor.putString("profile_picture", profile_picture);
                     editor.commit();
+                    progressDialog.dismiss();
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
 

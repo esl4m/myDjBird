@@ -6,8 +6,8 @@
 
     <string name="action_settings">Settings</string>
 
-    <!--<string name="api_base_url">http://192.168.0.96:8000/</string>-->
-    <string name="api_base_url">http://192.168.1.4:8000/</string>
+    <string name="api_base_url">http://192.168.0.96:8000/</string>
+    <!--<string name="api_base_url">http://192.168.1.4:8000/</string>-->
     <string name="api_login_url">myDjBird_app/api/token-auth/</string>
     <string name="api_get_user_info">myDjBird_app/api/authview/</string>
     <string name="api_register_url">myDjBird_app/api/token-auth/</string>
