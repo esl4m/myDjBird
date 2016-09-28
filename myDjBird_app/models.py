@@ -15,7 +15,7 @@ def only_filename(instance, filename):
 
 class Users(models.Model):
     user = models.OneToOneField(User)
-    # password = models.CharField(max_length=50)
+    username = models.CharField(max_length=30, unique=True, blank=False)
     email = models.EmailField()
     profile_picture = models.ImageField(storage=fs, upload_to=only_filename, blank=True, null=True)
 
