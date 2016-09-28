@@ -137,6 +137,7 @@ def register_user(request):
             dj_user = Users(
                 id=user.id,
                 user=user,
+                username=form.cleaned_data['username'],
                 email=form.cleaned_data['email'],
                 profile_picture=profile_pic,
                 # profile_picture=form.cleaned_data['profile_picture'],
