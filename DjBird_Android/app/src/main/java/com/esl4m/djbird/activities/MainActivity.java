@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.profile) {
             // display user profile
+            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivityForResult(intent, 0);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
         } else if (id == R.id.users) {
             // List all users
