@@ -26,6 +26,9 @@
         <activity
             android:name=".activities.UsersActivity"
             android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
