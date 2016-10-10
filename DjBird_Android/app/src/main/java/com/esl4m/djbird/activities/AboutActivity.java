@@ -16,8 +16,8 @@ public class AboutActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView welcome_user = (TextView) findViewById(R.id.about);
-        welcome_user.setText("About DjBird" +
+        TextView about = (TextView) findViewById(R.id.about_text);
+        about.setText("About DjBird" +
                 "\n" + "\n" +
                 "DjBird is a simple Python-Django project.\n" +
                 "\n" +
