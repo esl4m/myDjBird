@@ -10,7 +10,7 @@
     tools:context="com.esl4m.djbird.activities.AboutActivity">
 
     <TextView
-        android:id="@+id/about"
+        android:id="@+id/about_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
