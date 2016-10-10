@@ -20,7 +20,6 @@ import com.esl4m.djbird.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    TextView txt_open_login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +98,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.users) {
             // List all users
+            Intent intent = new Intent(getApplicationContext(), UsersActivity.class);
+            startActivityForResult(intent, 0);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
         } else if (id == R.id.about) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
