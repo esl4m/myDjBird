@@ -44,4 +44,5 @@ urlpatterns = [
 
     url(r'^api/list_users/', api_views.UsersList.as_view()),
     url(r'^api/timeline/', api_views.TimelineList.as_view()),
+    url(r'^api/profile/', api_views.ProfileList.as_view()),
 ]
