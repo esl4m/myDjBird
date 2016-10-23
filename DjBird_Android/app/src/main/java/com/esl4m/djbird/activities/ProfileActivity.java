@@ -24,8 +24,12 @@ public class ProfileActivity extends AppCompatActivity {
         String email = prefs.getString("email", null);
         String profile_picture = prefs.getString("profile_picture", null);
 
+        TextView name = (TextView) findViewById(R.id.username);
+        name.setText("@" + username);
+
         TextView list_users = (TextView) findViewById(R.id.profile_text);
         list_users.setText("My Profile " + username + "  " + email + " " + profile_picture);
+
         ImageView profile_pic = (ImageView) findViewById(R.id.profile_pic);
 //        Log.v("profile_picture","profile_picture : " + profile_picture);
 //        Log.v("profile_picture","profile_picture : " + R.string.api_base_url+"static/profile_pictures/"+profile_picture);
