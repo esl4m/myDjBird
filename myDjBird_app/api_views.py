@@ -132,6 +132,21 @@ class UsersList(generics.ListCreateAPIView):
     serializer_class = UsersSerializer
 
 
+class ProfileList(generics.ListCreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    # queryset = Users.objects.get(user=request.user)
+    serializer_class = UsersSerializer
+
+    def get_queryset(self):
+        """
+        This view should return user details
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Users.objects.filter(user=user)
+
+
 class TimelineList(generics.ListCreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)

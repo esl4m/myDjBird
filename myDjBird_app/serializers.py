@@ -12,6 +12,10 @@ class UsersSerializer(serializers.ModelSerializer):
         model = Users
         fields = ('id', 'username', 'email', 'profile_picture')
 
+# class ProfileSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Users
+#         fields = ('id', 'username', 'email', 'profile_picture')
 
 class TimelineSerializer(serializers.ModelSerializer):
     user = UsersSerializer()
