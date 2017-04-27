@@ -68,7 +68,7 @@ Thank you for your time and enjoy using DjBird :)
 
 * Future work :<br/>
 ** In web version :<br/>
-Add the timeline tweets.<br/>
+- Add the timeline tweets.
+<br/><br/>
 ** In Mobile version :<br/>
 ..
-
