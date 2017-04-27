@@ -11,3 +11,4 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^myDjBird_app/', include('myDjBird_app.urls')),
 ]
+
