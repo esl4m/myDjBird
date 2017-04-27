@@ -63,4 +63,12 @@ To access the application .. type on your browser
 $ 127.0.0.1:8000/myDjBird_app/
 ```
 <br/><br/>
-Thank you for your time and enjoy using DjBird :) 
+Thank you for your time and enjoy using DjBird :)
+<br/><br/>
+
+* Future work :
+.. In web version :<br/>
+Add the timeline tweets.<br/>
+.. In Mobile version :<br/>
+..
+
