@@ -66,9 +66,9 @@ $ 127.0.0.1:8000/myDjBird_app/
 Thank you for your time and enjoy using DjBird :)
 <br/><br/>
 
-* Future work :
-.. In web version :<br/>
+* Future work :<br/>
+** In web version :<br/>
 Add the timeline tweets.<br/>
-.. In Mobile version :<br/>
+** In Mobile version :<br/>
 ..
 
