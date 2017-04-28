@@ -3,3 +3,4 @@ profile_pictures/*
 static/images/*
 static/profile_pictures/*
 myDjBird_app/migrations/*
+myDjBird/settings.py
