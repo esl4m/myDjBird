@@ -2,5 +2,6 @@
 profile_pictures/*
 static/images/*
 static/profile_pictures/*
+myDjBird/wsgi.pyc
 myDjBird_app/migrations/*
 myDjBird/settings.py
