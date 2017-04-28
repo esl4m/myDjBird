@@ -33,13 +33,11 @@ $ pip install -r requirements.txt    # (to install all requirements)
 $ git clone https://github.com/esl4m/myDjBird.git
 ```
 
-* Create mysql Database :
-<br/>
-from terminal login to mysql 
+* Create mysql Database, from terminal login to mysql : <br/>
 ```
 $ mysql --user=root --password=root
 ```
-then create your database 
+then create your database <br/>
 ```
 $ create database dj_bird ;
 ```
@@ -63,4 +61,12 @@ To access the application .. type on your browser
 $ 127.0.0.1:8000/myDjBird_app/
 ```
 <br/><br/>
-Thank you for your time and enjoy using DjBird :) 
+Thank you for your time and enjoy using DjBird :)
+<br/><br/>
+
+* Future work :<br/>
+** In web version :<br/>
+- Add the timeline tweets.
+<br/><br/>
+** In Mobile version :<br/>
+..
