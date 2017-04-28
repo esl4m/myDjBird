@@ -33,13 +33,11 @@ $ pip install -r requirements.txt    # (to install all requirements)
 $ git clone https://github.com/esl4m/myDjBird.git
 ```
 
-* Create mysql Database :
-<br/>
-from terminal login to mysql 
+* Create mysql Database, from terminal login to mysql : <br/>
 ```
 $ mysql --user=root --password=root
 ```
-then create your database 
+then create your database <br/>
 ```
 $ create database dj_bird ;
 ```
